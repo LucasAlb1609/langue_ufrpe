@@ -1,0 +1,27 @@
+/* Tablet Styles (min-width: 769px and max-width: 1024px) */
+
+nav {
+    padding: 0 15px;
+}
+
+.hero-content h1 {
+    font-size: 2.5em;
+}
+
+.hero-images img {
+    max-height: 180px;
+}
+
+.cards-container {
+    justify-content: space-between;
+}
+
+.card {
+    width: 45%;
+    margin: 15px 0;
+}
+
+.footer-content {
+    padding: 0 15px;
+}
+

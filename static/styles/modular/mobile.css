@@ -1,0 +1,63 @@
+/* Mobile Styles (max-width: 768px) */
+
+header {
+    padding: 10px;
+}
+
+nav {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.nav-links {
+    flex-direction: column;
+    width: 100%;
+    display: none; /* Hidden by default, will be toggled by JS */
+}
+
+.nav-links.active {
+    display: flex;
+}
+
+.nav-links li {
+    margin: 10px 0;
+}
+
+.search-bar {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.hero-content h1 {
+    font-size: 2em;
+}
+
+.hero-images {
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero-images img {
+    max-height: 150px;
+    margin: 10px 0;
+}
+
+.cards-container {
+    flex-direction: column;
+    align-items: center;
+}
+
+.card {
+    width: 90%;
+    margin: 10px 0;
+}
+
+.footer-content {
+    flex-direction: column;
+}
+
+.social-media {
+    margin-top: 10px;
+}
+
+
