@@ -3,86 +3,145 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{% block title %}LANGUE UFRPE{% endblock %}</title>
-    <!-- CSS Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>LANGUE UFRPE - Laboratório de Estudos da Linguagem</title>
+    <meta name="description" content="Laboratório de Estudos da Linguagem, Literatura e História da UFRPE">
     
-    <!-- CSS Personalizado Modular -->
-    <link rel="stylesheet" href="{% static 'styles/modular/home.css' %}">
-    <!-- Fontes -->
+    <!-- Preload de fontes para melhor performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,500;1,600&display=swap" rel="stylesheet"> 
-
-    {% block extra_css %}{% endblock %}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,500;1,600&display=swap" rel="stylesheet">
+    
+    <!-- CSS Bootstrap (opcional, pode ser removido se não usado) -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <!-- CSS Personalizado - Ordem importante para responsividade -->
+    <link rel="stylesheet" href="{% static 'styles/modular/home.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/modular/animations.css'%}">
+    
+    <!-- CSS Responsivo com media queries específicas -->
+    <link rel="stylesheet" href="{% static 'styles/modular/tablet.css'%}" media="screen and (min-width: 769px) and (max-width: 1024px)">
+    <link rel="stylesheet" href="{% static 'styles/modular/mobile.css'%}" media="screen and (max-width: 768px)">
+    
+    <!-- Meta tags para SEO e redes sociais -->
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="LANGUE UFRPE">
+    <meta property="og:description" content="Laboratório de Estudos da Linguagem, Literatura e História">
+    <meta property="og:type" content="website">
+    
+    <!-- Favicon (adicionar se disponível) -->
+    <!-- <link rel="icon" type="image/x-icon" href="/favicon.ico"> -->
+</head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">
-                <img src="{% static 'images/university_logo.png' %}" alt="University Logo">
-                <span>UNIVERSITY</span>
-            </div>
-            <ul class="nav-links">
-                <li><a href="#">Research Areas</a></li>
-                <li><a href="#">Publications</a></li>
-                <li><a href="#">Team</a></li>
-                <li><a href="#">Events</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-            <div class="search-bar">
-                <input type="text" placeholder="Search...">
-                <button type="submit"><img src="{% static 'images/search_icon.png' %}" alt="Search"></button>
-            </div>
-        </nav>
-        <div class="hero-section">
-            <div class="hero-content">
-                <h1>University<br>Language, Literature<br>& History Research Lab</h1>
-                <div class="hero-images">
-                    <img src="{% static 'images/books.png' %}" alt="Books">
-                    <img src="{% static 'images/feather.png' %}" alt="Feather">
-                    <img src="{% static 'images/laptop.png' %}" alt="Laptop">
-                </div>
+    <!-- Barra superior -->
+    <div class="top-bar">
+        <div class="logo">
+            <a href="/" aria-label="Página inicial do LANGUE UFRPE">
+                <img src="https://via.placeholder.com/96x96/721a1a/ffffff?text=LOGO" alt="Logo Langue UFRPE" width="96" height="96">
+            </a>
+        </div>
+        <div class="search-expand search-bar-red" id="searchExpand" role="search">
+            <input type="text" class="search-input" id="searchInput" placeholder="Pesquisar..." aria-label="Campo de busca">
+            <button class="search-btn" id="searchBtn" aria-label="Pesquisar" type="button">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M21 21L16.514 16.506L21 21ZM19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Seção Hero -->
+    <div class="hero-section">
+        <div class="hero-img-container">
+            <img src="https://via.placeholder.com/600x340/f0f0f0/333333?text=Hero+Image" alt="Imagem representativa do laboratório" width="600" height="340">
+            <div class="hero-title">
+                Laboratório de Estudos da Linguagem, Literatura e História
             </div>
         </div>
-    </header>
+        
+        <!-- Navegação principal -->
+        <nav class="main-nav" role="navigation" aria-label="Menu principal">
+            <ul class="main-nav-list">
+                <li><a href="#linhas-pesquisa" class="active">Linhas de Pesquisa</a></li>
+                <li><a href="#producao-bibliografica">Produção Bibliográfica</a></li>
+                <li><a href="#nosso-time">Nosso Time</a></li>
+                <li><a href="#publicacoes">Publicações</a></li>
+            </ul>
+            <!-- Botão hambúrguer será inserido via JavaScript -->
+        </nav>
+    </div>
 
-    <main>
-        <section class="featured-publications">
+    <!-- Conteúdo principal -->
+    <main role="main">
+        <section class="featured-publications" id="publicacoes-destaque">
             <h2>Featured Publications</h2>
             <div class="cards-container">
-                <div class="card">
+                <article class="card">
                     <h3>Latest Research</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pulvinar, lectus eu commodo pulvinar, lectus eu commodo pulvinar, lectus eu commodo pulvinar.</p>
-                    <a href="#"><img src="{% static 'images/search_icon_red.png' %}" alt="Search Icon"></a>
-                </div>
-                <div class="card">
+                    <a href="#latest-research" aria-label="Ver mais sobre Latest Research">
+                        <img src="https://via.placeholder.com/30x30/721a1a/ffffff?text=🔍" alt="" width="30" height="30">
+                    </a>
+                </article>
+                
+                <article class="card">
                     <h3>Featured Publications</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pulvinar, lectus eu commodo pulvinar, lectus eu commodo pulvinar, lectus eu commodo pulvinar.</p>
-                    <a href="#"><img src="{% static 'images/document_icon_red.png' %}" alt="Document Icon"></a>
-                </div>
-                <div class="card">
+                    <a href="#featured-publications" aria-label="Ver mais sobre Featured Publications">
+                        <img src="https://via.placeholder.com/30x30/721a1a/ffffff?text=📄" alt="" width="30" height="30">
+                    </a>
+                </article>
+                
+                <article class="card">
                     <h3>Upcoming Events</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pulvinar, lectus eu commodo pulvinar, lectus eu commodo pulvinar, lectus eu commodo pulvinar.</p>
-                    <a href="#"><img src="{% static 'images/calendar_icon_red.png' %}" alt="Calendar Icon"></a>
-                </div>
+                    <a href="#upcoming-events" aria-label="Ver mais sobre Upcoming Events">
+                        <img src="https://via.placeholder.com/30x30/721a1a/ffffff?text=📅" alt="" width="30" height="30">
+                    </a>
+                </article>
             </div>
         </section>
     </main>
 
-    <footer>
+    <!-- Rodapé -->
+    <footer role="contentinfo">
         <div class="footer-content">
             <p>Copyright &copy; 2025 University. All rights reserved.</p>
-            <div class="social-media">
-                <a href="#"><img src="{% static 'images/facebook_icon.png' %}" alt="Facebook"></a>
-                <a href="#"><img src="{% static 'images/twitter_icon.png' %}" alt="Twitter"></a>
-                <a href="#"><img src="{% static 'images/linkedin_icon.png' %}" alt="LinkedIn"></a>
+            <div class="social-media" role="list" aria-label="Redes sociais">
+                <a href="#facebook" aria-label="Facebook" role="listitem">
+                    <img src="https://via.placeholder.com/24x24/ffffff/333333?text=f" alt="Facebook" width="24" height="24">
+                </a>
+                <a href="#twitter" aria-label="Twitter" role="listitem">
+                    <img src="https://via.placeholder.com/24x24/ffffff/333333?text=t" alt="Twitter" width="24" height="24">
+                </a>
+                <a href="#linkedin" aria-label="LinkedIn" role="listitem">
+                    <img src="https://via.placeholder.com/24x24/ffffff/333333?text=in" alt="LinkedIn" width="24" height="24">
+                </a>
             </div>
         </div>
     </footer>
 
-    <script src="{% static 'js/script.js' %}"></script>
+    <!-- JavaScript otimizado -->
+    <script src="{% static 'js/home.js'%}"></script>
+    
+    <!-- Script inline para funcionalidades críticas -->
+    <script>
+        // Detectar se é dispositivo touch
+        if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+            document.documentElement.classList.add('touch-device');
+        }
+        
+        // Detectar tema preferido do sistema
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark-theme');
+        }
+        
+        // Performance: marcar quando o DOM está pronto
+        document.addEventListener('DOMContentLoaded', function() {
+            performance.mark('dom-ready');
+        });
+    </script>
 </body>
 </html>
 

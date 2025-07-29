@@ -1,63 +1,256 @@
-/* Mobile Styles (max-width: 768px) */
+/* Mobile Styles Optimized (max-width: 768px) */
 
-header {
-    padding: 10px;
+/* Reset e ajustes gerais para mobile */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+
+    /* Top Bar - Barra superior */
+    .top-bar {
+        padding: 12px 15px;
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .top-bar .logo img {
+        height: 60px; /* Reduzido de 96px */
+    }
+
+    /* Campo de busca responsivo */
+    .search-bar-red {
+        width: 100%;
+        max-width: 280px;
+        justify-content: center;
+    }
+
+    .search-bar-red.active .search-input {
+        width: 200px; /* Ajustado para mobile */
+    }
+
+    /* Hero Section */
+    .hero-section {
+        padding: 0 15px;
+    }
+
+    .hero-img-container {
+        min-height: 250px; /* Reduzido de 340px */
+        margin-bottom: 20px;
+    }
+
+    .hero-img-container img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .hero-title {
+        font-size: 1.4em; /* Reduzido significativamente */
+        font-weight: 600;
+        line-height: 1.2;
+        width: 95%;
+        padding: 0 10px;
+        text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
+    }
+
+    /* Menu de navegação principal - Menu hambúrguer */
+    .main-nav {
+        background: #fff7f5;
+        border-bottom: 1px solid #eee;
+        padding: 0 15px;
+        position: relative;
+    }
+
+    .main-nav-list {
+        flex-direction: column;
+        gap: 0;
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: #fff7f5;
+        border-top: 1px solid #eee;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        z-index: 1000;
+    }
+
+    .main-nav-list.active {
+        max-height: 300px;
+        padding: 10px 0;
+    }
+
+    .main-nav-list li {
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .main-nav-list li:last-child {
+        border-bottom: none;
+    }
+
+    .main-nav-list a {
+        padding: 15px 20px;
+        font-size: 1.1em;
+        display: block;
+        width: 100%;
+    }
+
+    .main-nav-list a::after {
+        display: none; /* Remove underline effect em mobile */
+    }
+
+    /* Botão hambúrguer */
+    .nav-toggle {
+        display: block;
+        background: none;
+        border: none;
+        font-size: 1.5em;
+        cursor: pointer;
+        padding: 10px;
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 1001;
+    }
+
+    .nav-toggle::before {
+        content: '☰';
+        color: #333;
+    }
+
+    .nav-toggle.active::before {
+        content: '✕';
+    }
+
+    /* Main Content */
+    main {
+        padding: 20px 15px;
+        margin: 0;
+    }
+
+    /* Featured Publications */
+    .featured-publications h2 {
+        font-size: 1.8em; /* Reduzido de 2.5em */
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    /* Cards Container - Layout em coluna única */
+    .cards-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 10px 0;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 350px;
+        margin: 0;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+    }
+
+    .card h3 {
+        font-size: 1.3em;
+        margin-bottom: 12px;
+        text-align: center;
+    }
+
+    .card p {
+        font-size: 0.95em;
+        line-height: 1.5;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .card a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: auto;
+    }
+
+    .card a img {
+        height: 24px;
+        transition: transform 0.2s;
+    }
+
+    .card a:hover img {
+        transform: scale(1.1);
+    }
+
+    /* Footer */
+    footer {
+        padding: 25px 15px;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+        padding: 0;
+    }
+
+    .footer-content p {
+        font-size: 0.9em;
+        margin: 0;
+    }
+
+    .social-media {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .social-media a {
+        margin: 0;
+    }
+
+    .social-media img {
+        height: 20px;
+        transition: transform 0.2s;
+    }
+
+    .social-media a:hover img {
+        transform: scale(1.1);
+    }
+
+    /* Ajustes de tipografia para mobile */
+    h1, h2, h3 {
+        line-height: 1.2;
+    }
+
+    /* Melhorar área de toque para elementos interativos */
+    a, button {
+        min-height: 44px;
+        min-width: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Otimizações de performance para mobile */
+    * {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Scrolling suave */
+    html {
+        scroll-behavior: smooth;
+    }
 }
-
-nav {
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.nav-links {
-    flex-direction: column;
-    width: 100%;
-    display: none; /* Hidden by default, will be toggled by JS */
-}
-
-.nav-links.active {
-    display: flex;
-}
-
-.nav-links li {
-    margin: 10px 0;
-}
-
-.search-bar {
-    width: 100%;
-    margin-top: 10px;
-}
-
-.hero-content h1 {
-    font-size: 2em;
-}
-
-.hero-images {
-    flex-direction: column;
-    align-items: center;
-}
-
-.hero-images img {
-    max-height: 150px;
-    margin: 10px 0;
-}
-
-.cards-container {
-    flex-direction: column;
-    align-items: center;
-}
-
-.card {
-    width: 90%;
-    margin: 10px 0;
-}
-
-.footer-content {
-    flex-direction: column;
-}
-
-.social-media {
-    margin-top: 10px;
-}
-
 

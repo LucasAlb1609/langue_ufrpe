@@ -1,27 +1,181 @@
-/* Tablet Styles (min-width: 769px and max-width: 1024px) */
+/* Tablet Styles Optimized (769px to 1024px) */
 
-nav {
-    padding: 0 15px;
-}
+@media (min-width: 769px) and (max-width: 1024px) {
+    
+    /* Ajustes gerais para tablet */
+    body {
+        font-size: 15px;
+    }
 
-.hero-content h1 {
-    font-size: 2.5em;
-}
+    /* Top Bar */
+    .top-bar {
+        padding: 15px 30px;
+        max-width: none;
+    }
 
-.hero-images img {
-    max-height: 180px;
-}
+    .top-bar .logo img {
+        height: 80px; /* Tamanho intermediário */
+    }
 
-.cards-container {
-    justify-content: space-between;
-}
+    .search-bar-red.active .search-input {
+        width: 200px;
+    }
 
-.card {
-    width: 45%;
-    margin: 15px 0;
-}
+    /* Hero Section */
+    .hero-img-container {
+        min-height: 300px;
+    }
 
-.footer-content {
-    padding: 0 15px;
+    .hero-title {
+        font-size: 2.1em; /* Tamanho intermediário */
+        font-weight: 600;
+        line-height: 1.15;
+    }
+
+    /* Menu de navegação */
+    .main-nav {
+        padding: 0 30px;
+    }
+
+    .main-nav-list {
+        gap: 30px; /* Reduzido de 40px */
+    }
+
+    .main-nav-list a {
+        font-size: 1.1em;
+        padding: 16px 0 8px 0;
+    }
+
+    /* Main Content */
+    main {
+        padding: 0 30px;
+        margin: 20px auto;
+    }
+
+    /* Featured Publications */
+    .featured-publications h2 {
+        font-size: 2.2em; /* Tamanho intermediário */
+        margin-bottom: 25px;
+    }
+
+    /* Cards Container - Layout 2 colunas para tablet */
+    .cards-container {
+        justify-content: space-around;
+        gap: 20px;
+        padding: 15px 0;
+    }
+
+    .card {
+        width: 45%; /* Duas colunas */
+        max-width: 400px;
+        margin: 10px 0;
+        padding: 22px;
+    }
+
+    .card h3 {
+        font-size: 1.4em;
+        margin-bottom: 12px;
+    }
+
+    .card p {
+        font-size: 1em;
+        line-height: 1.5;
+    }
+
+    .card a img {
+        height: 28px;
+    }
+
+    /* Footer */
+    footer {
+        padding: 25px 30px;
+    }
+
+    .footer-content {
+        padding: 0 30px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .social-media {
+        margin-top: 0;
+    }
+
+    .social-media img {
+        height: 22px;
+    }
+
+    /* Ajustes específicos para orientação landscape em tablets */
+    @media (orientation: landscape) {
+        .hero-title {
+            font-size: 1.9em;
+        }
+
+        .main-nav-list {
+            gap: 25px;
+        }
+
+        .cards-container {
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .card {
+            width: 48%;
+        }
+    }
+
+    /* Ajustes para orientação portrait em tablets */
+    @media (orientation: portrait) {
+        .cards-container {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card {
+            width: 80%;
+            max-width: 500px;
+        }
+    }
+
+    /* Melhorar área de toque para tablet */
+    a, button {
+        min-height: 48px;
+        min-width: 48px;
+    }
+
+    /* Hover effects para tablet (quando suportado) */
+    @media (hover: hover) {
+        .main-nav-list a:hover {
+            color: #961120;
+        }
+
+        .main-nav-list a:hover::after {
+            width: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .top-bar .logo a:hover img {
+            transform: scale(1.05) rotate(-2deg);
+        }
+    }
+
+    /* Otimizações específicas para iPad */
+    @media (min-width: 768px) and (max-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
+        .hero-title {
+            font-size: 2em;
+        }
+
+        .main-nav-list {
+            gap: 28px;
+        }
+    }
 }
 
