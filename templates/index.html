@@ -38,7 +38,7 @@
     <div class="top-bar">
         <div class="logo">
             <a href="/" aria-label="Página inicial do LANGUE UFRPE">
-                <img src="https://via.placeholder.com/96x96/721a1a/ffffff?text=LOGO" alt="Logo Langue UFRPE" width="96" height="96">
+                <img src="{% static 'images/logo_langue.png'%}" alt="Logo Langue UFRPE" width="96" height="96">
             </a>
         </div>
         <div class="search-expand search-bar-red" id="searchExpand" role="search">
@@ -54,16 +54,15 @@
     <!-- Seção Hero -->
     <div class="hero-section">
         <div class="hero-img-container">
-            <img src="https://via.placeholder.com/600x340/f0f0f0/333333?text=Hero+Image" alt="Imagem representativa do laboratório" width="600" height="340">
-            <div class="hero-title">
-                Laboratório de Estudos da Linguagem, Literatura e História
-            </div>
+            <img src="{% static 'images/langue-image.png'%}" alt="Imagem representativa do laboratório" width="1200" height="680">
         </div>
+    </div>
         
         <!-- Navegação principal -->
         <nav class="main-nav" role="navigation" aria-label="Menu principal">
             <ul class="main-nav-list">
-                <li><a href="#linhas-pesquisa" class="active">Linhas de Pesquisa</a></li>
+                <li><a href="#langue" class="active">Conheça o LANGUE UFRPE</a></li>
+                <li><a href="#linhas-pesquisa">Linhas de Pesquisa</a></li>
                 <li><a href="#producao-bibliografica">Produção Bibliográfica</a></li>
                 <li><a href="#nosso-time">Nosso Time</a></li>
                 <li><a href="#publicacoes">Publicações</a></li>
@@ -74,6 +73,19 @@
 
     <!-- Conteúdo principal -->
     <main role="main">
+
+        <section class="about-langue-section">
+            <div class="about-langue-container animate-fade-in">
+                <h2 class="about-langue-title">Laboratório de Estudos da Linguagem, Literatura e História (LANGUE)</h2>
+                <div class="about-langue-body">
+                    <p>O Laboratório de Estudos da Linguagem, Literatura e História (LANGUE) foi criado em 2016 na Universidade Federal Rural de Pernambuco (UFRPE), sob a coordenação do Prof. Dr. Natanael Duarte de Azevedo e com participação de pesquisadores/as da UFRPE e de outras IES do Brasil. O Laboratório desenvolve atividades de pesquisa que tratam da historiografia da literatura brasileira nos séculos XIX e XX e das relações de linguagem, gênero e poder de grupos subalternos.</p>
+                    <p>Através de ações integradas entre projetos de iniciação científica (financiados por diferentes agências de fomento), projetos vinculados ao Programa de Atividades de Vivência Interdisciplinar (PAVI-UFRPE), o Mestrado em Estudos da Linguagem (PROGEL-UFRPE) e o Programa de Pós-graduação em História (Mestrado e Doutorado) da UFRPE, o LANGUE tem promovido diálogos e articulações entre estudantes da graduação e da pós-graduação.</p>
+                    <p>O LANGUE conseguiu, de forma ininterrupta, aprovar projetos em editais de bolsa de iniciação científica (bolsas CNPq/UFRPE, CNPq-Af e FACEPE), além de outros editais de bolsa de pós-graduação (bolsas FACEPE) e de fomento à pesquisa (Chamada MCTIC/CNPQ Nº 28/2018 – UNIVERSAL). Destaca-se que as ações desenvolvidas pelo LANGUE produziram diversos artigos científicos, livros, capítulos de livros e organização de eventos nacionais e internacionais, proporcionando uma maior visibilidade do Laboratório e das pesquisas nele desenvolvidas no cenário acadêmico nacional.</p>
+                </div>
+            </div>
+        </section>
+    </main>   
+        
         <section class="featured-publications" id="publicacoes-destaque">
             <h2>Featured Publications</h2>
             <div class="cards-container">
@@ -102,7 +114,6 @@
                 </article>
             </div>
         </section>
-    </main>
 
     <!-- Rodapé -->
     <footer role="contentinfo">

@@ -101,13 +101,15 @@ nav {
 
 .top-bar .logo img {
     height: 96px;
-    transition: transform 0.3s cubic-bezier(.4,2,.6,1), filter 0.3s;
+    transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                filter 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     max-width: 100%;
 }
 
 .top-bar .logo a:hover img {
     transform: scale(1.12) rotate(-4deg);
     filter: drop-shadow(0 4px 16px #96112044) brightness(1.1);
+    transition-duration: 1.5s; /* Aumentei o tempo */
 }
 
 .search-btn {
@@ -145,6 +147,10 @@ nav {
 .search-expand.active .search-input {
     width: 180px;
     opacity: 1;
+    background: transparent;
+    padding: 0 0 0 8px;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    transition-delay: 0.1s; /* Pequeno delay para sincronização */
 }
 
 .search-bar-red {
@@ -158,6 +164,7 @@ nav {
     transition: width 0.3s;
     box-shadow: 0 2px 8px #96112022;
     position: relative;
+    transition: width 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .search-bar-red .search-input {
@@ -170,7 +177,8 @@ nav {
     font-size: 1.15em;
     padding: 0;
     margin-right: 12px;
-    transition: width 0.35s cubic-bezier(.4,2,.6,1), opacity 0.2s;
+    transition: width 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                opacity 0.4s ease;
 }
 
 .search-bar-red.active .search-input {
@@ -178,6 +186,7 @@ nav {
     opacity: 1;
     background: transparent;
     padding: 0 0 0 8px;
+    transition-delay: 0.1s; /* Pequeno delay para sincronização */
 }
 
 .search-bar-red .search-input::placeholder {
@@ -202,53 +211,46 @@ nav {
 .search-bar-red .search-btn svg {
     height: 20px;
     width: 20px;
-    transition: none;
+    transition: transform 1s ease, filter 1s ease;
 }
 
 .search-bar-red .search-btn svg path {
+    stroke: #fff !important;
+    transition: stroke 1s ease;
+}
+
+.search-bar-red .search-btn:hover svg {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+.search-bar-red .search-btn:hover svg path {
     stroke: #fff !important;
 }
 
 /* Hero Section - Otimizado */
 .hero-section {
-    background: #fff7f5;
-    padding: 0;
-    position: relative;
-    text-align: center;
-}
-
-.hero-img-container {
-    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 340px;
-    overflow: hidden;
+    padding: 2rem;
+    background-color: #fff7f5;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.hero-img-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .hero-img-container img {
-    max-width: 600px;
     width: 100%;
+    max-width: 1200px; /* Dobrando o tamanho original (600->1200) */
     height: auto;
-    display: block;
-    object-fit: cover;
-}
-
-.hero-title {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #222;
-    font-family: 'Poppins', Arial, sans-serif;
-    font-size: clamp(1.5rem, 4vw, 2.5rem); /* Responsivo */
-    font-weight: 700;
-    text-align: center;
-    text-shadow: 0 2px 8px #fff6f5, 0 1px 0 #fff6f5;
-    line-height: 1.1;
-    width: 90%;
-    max-width: 800px;
-    padding: 0 20px;
+    object-fit: contain;
 }
 
 /* Menu de navegação - Otimizado */
@@ -329,10 +331,11 @@ main {
 .featured-publications {
     text-align: center;
     margin-bottom: 40px;
+    background-color: #ffffff;
 }
 
 .featured-publications h2 {
-    font-size: clamp(1.8rem, 5vw, 2.5rem); /* Responsivo */
+    font-size: clamp(1.4rem, 4vw, 1.8rem); /* Responsivo */
     margin-bottom: 30px;
     color: #333333;
     font-weight: 600;
@@ -340,27 +343,31 @@ main {
 
 .cards-container {
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start; /* Altera de space-around para flex-start */
     flex-wrap: wrap;
     background: #fffcfe;
-    padding: 20px 0;
-    gap: 20px;
+    padding: 20px;
+    gap: 20px; /* Mantém o espaçamento entre os cards */
+    margin: 0 auto;
+    max-width: 1200px; /* Define uma largura máxima para o container */
+    align-items: stretch; /* Padrão do flex, mas explícito é melhor */
 }
 
 .card {
     background-color: #fff7f5;
     border: 1px solid #ddd;
     border-radius: 12px;
-    padding: 24px;
-    margin: 15px;
-    width: calc(33.333% - 30px);
+    padding: 24px;  /* Remove a margem (margin) pois já temos gap no container */
+    width: calc(33.333% - 14px); /* Ajuste fino para 3 cards por linha considerando o gap */
     min-width: 280px;
+    max-width: 380px; /* Opcional: define largura máxima para cards muito largos */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     text-align: left;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     transition: transform 0.2s, box-shadow 0.2s;
+    flex-grow: 1; /* Permite que os cards cresçam uniformemente */
+    box-sizing: border-box; /* Garante que padding não afete a largura calculada */
 }
 
 .card:hover {
@@ -471,38 +478,56 @@ footer {
     }
 }
 
-@media (max-width: 900px) {
+/* Ponto de quebra para tablets - Básico */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+    .hero-img-container img {
+        max-width: 1000px;
+    }
+
+    .card {
+        flex: 0 0 calc(50% - 20px); /* 2 cards por linha em tablets */
+    }
+}
+
+
+/* Ajustes para mobile */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 1rem;
+    }
+    
+    .hero-img-container img {
+        max-width: 100%;
+    }
+    }
+     
+    .main-nav-list { 
+        gap: 1rem; 
+    }
+
     .cards-container {
         justify-content: center;
     }
     
     .card {
         width: calc(50% - 20px);
-        min-width: 250px;
-    }
-}
-
-@media (max-width: 700px) {
-    .hero-title { 
-        font-size: 1.3em; 
-    }
-    
-    .main-nav-list { 
-        gap: 18px; 
-    }
-    
-    .card {
         width: 100%;
+        min-width: 250px;
         margin: 10px 0;
+        flex: 0 0 100%; /* 1 card por linha em mobile */
     }
-    
-    .cards-container {
+
+
+/* Ajustes mínimos para telas muito pequenas */
+@media (max-width: 480px) {    
+    .top-bar {
         flex-direction: column;
-        align-items: center;
+        gap: 1rem;
     }
 }
 
-/* Melhorias de acessibilidade */
+/* Melhorias de acessibilidade - Deve permanecer no principal */
 @media (prefers-reduced-motion: reduce) {
     * {
         animation-duration: 0.01ms !important;
@@ -515,4 +540,6 @@ footer {
 @media (prefers-color-scheme: dark) {
     /* Implementação futura se necessário */
 }
+
+
 
