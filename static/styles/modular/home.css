@@ -280,8 +280,8 @@ nav {
 .main-nav-list a {
     display: block;
     color: #222;
-    font-size: 1.15em;
-    font-weight: 500;
+    font-size: 1.30em;
+    font-weight: 600;
     text-decoration: none;
     padding: 18px 0 10px 0;
     transition: color 0.2s;
@@ -309,6 +309,20 @@ nav {
     width: 100%;
 }
 
+.about-langue-section {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    margin-top: 0;
+    transition: max-height 0.5s ease-out, opacity 0.4s ease-out, margin-top 0.4s ease-out;
+}
+
+.about-langue-section.show {
+    opacity: 1;
+    margin-top: 16px;
+}
+
+
 /* Botão hambúrguer (oculto por padrão) */
 .nav-toggle {
     display: none;
@@ -332,11 +346,12 @@ main {
     text-align: center;
     margin-bottom: 40px;
     background-color: #ffffff;
+    padding-top: 70px; /* Aumenta o espaçamento superior */
 }
 
 .featured-publications h2 {
     font-size: clamp(1.4rem, 4vw, 1.8rem); /* Responsivo */
-    margin-bottom: 30px;
+    margin-bottom: 5px;
     color: #333333;
     font-weight: 600;
 }
@@ -416,7 +431,7 @@ main {
 
 /* Footer - Otimizado */
 footer {
-    background-color: #333333; /* Preto */
+    background-color: #961120; /* Vinho */
     color: #ffffff;
     padding: 30px 0;
     text-align: center;

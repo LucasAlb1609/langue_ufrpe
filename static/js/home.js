@@ -1,6 +1,24 @@
 // JavaScript otimizado para responsividade
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
+    const menuLangueLink = document.querySelector('a[href="#langue"]');
+    const aboutSection = document.querySelector('.about-langue-section');
+
+    menuLangueLink.addEventListener('click', function (e) {
+        e.preventDefault();
+    
+        const isExpanded = aboutSection.classList.contains('show');
+    
+        if (!isExpanded) {
+            aboutSection.classList.add('show');
+            aboutSection.style.maxHeight = aboutSection.scrollHeight + 'px';
+        } else {
+            aboutSection.classList.remove('show');
+            aboutSection.style.maxHeight = '0';
+        }
+    });
+    
+
     console.log("Script otimizado carregado com sucesso!");
 
     // Criar e inserir botão hambúrguer para mobile
@@ -255,4 +273,3 @@ const optimizedResize = debounce(() => {
 }, 250);
 
 window.addEventListener('resize', optimizedResize);
-
