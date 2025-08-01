@@ -54,6 +54,16 @@
         text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
     }
 
+    .hero-title-container {
+        border-width: 1px;
+        padding: 25px 15px;
+    }
+    
+    .linha-pesquisa-image {
+        width: 100%;
+        margin: 0 auto 15px;
+    }
+
     /* Menu de navegação principal - Menu hambúrguer */
     .main-nav {
         background: #fff7f5;

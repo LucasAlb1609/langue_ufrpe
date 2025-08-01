@@ -1,0 +1,197 @@
+/* Linhas de Pesquisa CSS - LANGUE UFRPE (Versão Corrigida) */
+
+/* Variáveis e estilos base (mantidos) */
+:root {
+    --primary-color: #721a1a;
+    --secondary-color: #961120;
+    --background-light: #fff7f5;
+    --background-white: #fffcfe;
+    --text-dark: #333333;
+    --text-light: #666666;
+    --border-color: #eee;
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --shadow-medium: rgba(0, 0, 0, 0.15);
+    --transition-smooth: all 0.3s ease;
+    --border-radius: 12px;
+}
+
+.linhas-pesquisa-main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* Seções de linha de pesquisa */
+.linha-pesquisa-section {
+    margin-bottom: 20px;
+    background: var(--background-white);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 20px var(--shadow-light);
+    overflow: hidden; /* Essencial para a animação de max-height */
+    transition: box-shadow 0.3s ease;
+}
+
+.linha-pesquisa-section:hover {
+    box-shadow: 0 8px 30px var(--shadow-medium);
+}
+
+/* Cabeçalho clicável */
+.linha-pesquisa-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 25px;
+    cursor: pointer;
+    background-color: #ffffff; /* Fundo próprio para não ser transparente */
+    position: relative;
+    z-index: 2; /* Garante que fique sobre o conteúdo ao animar */
+    border-bottom: 1px solid transparent; /* Evita "pulo" na transição */
+    transition: border-color 0.5s ease;
+}
+
+/* Título, imagem e ícone no cabeçalho */
+.linha-pesquisa-title {
+    font-size: clamp(1.3rem, 4vw, 1.8rem);
+    font-weight: 600;
+    color: var(--primary-color);
+    margin: 0;
+    flex-grow: 1;
+}
+
+.linha-pesquisa-image {
+    width: 120px;
+    height: 120px;
+    min-width: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--secondary-color);
+}
+
+.linha-pesquisa-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.expand-icon {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Comportamento de expandir/recolher */
+.linha-pesquisa-section.retraida .linha-pesquisa-content {
+    max-height: 0;
+    overflow: hidden;
+}
+
+.linha-pesquisa-section.expandida .linha-pesquisa-header {
+    border-color: var(--border-color); /* Adiciona uma linha ao expandir */
+}
+
+.linha-pesquisa-section.expandida .expand-icon {
+    transform: rotate(180deg);
+}
+
+/* Conteúdo expansível - LÓGICA PRINCIPAL DA ANIMAÇÃO */
+.linha-pesquisa-content {
+    max-height: 3000px; /* Altura máxima grande o suficiente para o conteúdo */
+    padding: 25px;
+    background-color: var(--background-light);
+    
+    /* A transição controla a animação de "deslizar" */
+    transition: max-height 0.7s cubic-bezier(0.25, 0.8, 0.25, 1);
+    
+    will-change: max-height; /* Otimização de performance */
+}
+
+/* Estilos dos detalhes (mantidos) */
+.linha-pesquisa-details {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.detail-item {
+    background: var(--background-white);
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid var(--secondary-color);
+}
+
+.detail-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin: 0 0 10px 0;
+}
+
+.detail-content, .palavras-chave {
+    color: var(--text-dark);
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* Palavras-chave */
+.palavras-chave {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.palavra-chave {
+    background: var(--secondary-color);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+/* Seções de relacionados */
+.relacionados-section {
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 1px solid var(--border-color);
+}
+
+.relacionados-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.relacionados-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+}
+
+.relacionado-item {
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--background-white);
+}
+
+/* Estado de foco para acessibilidade */
+.linha-pesquisa-header:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+    border-radius: var(--border-radius);
+}
+
+/* Media queries para responsividade (integradas de mobile.css e tablet.css) */
+@media (max-width: 768px) {
+    .linha-pesquisa-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    .linha-pesquisa-image {
+        margin-top: 15px;
+        order: -1; /* Move a imagem para cima do título */
+    }
+    .expand-icon {
+        margin-top: 15px;
+    }
+}

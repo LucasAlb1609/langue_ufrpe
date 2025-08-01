@@ -12,6 +12,12 @@ body {
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
+    /* --- CORREÇÃO DO RODAPÉ (Início) --- */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Garante que o corpo ocupe no mínimo toda a altura da tela */
+    /* --- CORREÇÃO DO RODAPÉ (Fim) --- */
 }
 
 /* Container responsivo */
@@ -340,6 +346,10 @@ main {
     margin: 20px auto;
     padding: 0 20px;
     background-color: #fffcfe;
+    
+    /* --- CORREÇÃO DO RODAPÉ (Início) --- */
+    flex-grow: 1; /* Faz o conteúdo principal crescer para preencher o espaço vago */
+    /* --- CORREÇÃO DO RODAPÉ (Fim) --- */
 }
 
 .featured-publications {
@@ -555,6 +565,3 @@ footer {
 @media (prefers-color-scheme: dark) {
     /* Implementação futura se necessário */
 }
-
-
-

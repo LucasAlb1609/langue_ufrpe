@@ -16,13 +16,31 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+from django.views.generic import TemplateView
 from home import views
 
 urlpatterns = [
+    # Admin
     path('admin/', admin.site.urls),
-    # Esta linha direciona todas as URLs principais (como 'historia', etc.)
-    # para serem gerenciadas pelo arquivo 'urls.py' do app 'home'.
-    # Isso significa que todas as URLs que começam com 'historia', 'lideranca', etc.
-    # serão tratadas pelo sistema de URLs do app 'home'.
-    path('', include('home.urls')),
+    
+    # Página inicial
+    path('', TemplateView.as_view(template_name='home/index.html'), name='home'),
+    
+    # Linhas de pesquisa
+    path('linhas-de-pesquisa/', include('linhas_pesquisa.urls')),
+    
+    # Outras páginas do site
+    path('producao-bibliografica/', TemplateView.as_view(template_name='producao/index.html'), name='producao_bibliografica'),
+    path('nosso-time/', TemplateView.as_view(template_name='time/index.html'), name='nosso_time'),
+    path('publicacoes/', TemplateView.as_view(template_name='publicacoes/index.html'), name='publicacoes'),
+    
+    # API endpoints (se necessário)
+    path('api/', include('rest_framework.urls')),
 ]
+
+# Servir arquivos de mídia em desenvolvimento
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

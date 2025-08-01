@@ -32,6 +32,14 @@
         line-height: 1.15;
     }
 
+    .hero-title-container {
+        max-width: 85%;
+    }
+    
+    .linha-pesquisa-image {
+        max-width: 280px;
+    }
+
     /* Menu de navegação */
     .main-nav {
         padding: 0 30px;

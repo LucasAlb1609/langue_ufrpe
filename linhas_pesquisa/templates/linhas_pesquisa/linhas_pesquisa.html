@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ configuracao.titulo_pagina|default:"Linhas de Pesquisa" }} - LANGUE UFRPE{% endblock %}
+
+{% block page_styles %}
+    <link rel="stylesheet" href="{% static 'styles/modular/linhas_pesquisa.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/modular/animations.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/modular/tablet.css' %}" media="screen and (min-width: 769px) and (max-width: 1024px)">
+    <link rel="stylesheet" href="{% static 'styles/modular/mobile.css' %}" media="screen and (max-width: 768px)">
+{% endblock %}
+
+{% block content %}
+    <div class="hero-section">
+        {% if configuracao.imagem_hero %}
+            <div class="hero-img-container">
+                <img src="{{ configuracao.imagem_hero.url }}" alt="Imagem das Linhas de Pesquisa" width="1200" height="400">
+            </div>
+        {% endif %}
+        
+        <div class="hero-title-container">
+            <h1 class="hero-title">{{ configuracao.titulo_pagina|default:"Linhas de Pesquisa" }}</h1>
+            {% if configuracao.descricao_pagina %}
+                <p class="hero-description">{{ configuracao.descricao_pagina }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <main role="main" class="linhas-pesquisa-main">
+        {% if linhas_pesquisa %}
+            {% for linha in linhas_pesquisa %}
+                <section class="linha-pesquisa-section retraida animate-fade-in" id="linha-{{ linha.id }}">
+                    <div class="linha-pesquisa-header">
+                        <h2 class="linha-pesquisa-title">{{ linha.titulo }}</h2>
+                        
+                        {% if linha.imagem %}
+                            <div class="linha-pesquisa-image">
+                                <img src="{{ linha.imagem.url }}" alt="Imagem ilustrativa de {{ linha.titulo }}" loading="lazy">
+                            </div>
+                        {% endif %}
+                        
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    
+                    <div class="linha-pesquisa-content">
+                        <div class="linha-pesquisa-details">
+                            <div class="detail-item">
+                                <h3 class="detail-title">Objetivo:</h3>
+                                <p class="detail-content">{{ linha.objetivo }}</p>
+                            </div>
+                            
+                            {% if linha.get_palavras_chave_list %}
+                                <div class="detail-item">
+                                    <h3 class="detail-title">Palavras-chave:</h3>
+                                    <div class="palavras-chave">
+                                        {% for palavra in linha.get_palavras_chave_list %}
+                                            <span class="palavra-chave">{{ palavra }}</span>{% if not forloop.last %};{% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                            
+                            <div class="detail-item">
+                                <h3 class="detail-title">Setores de aplicação:</h3>
+                                <p class="detail-content">{{ linha.setores_aplicacao }}</p>
+                            </div>
+                        </div>
+                        
+                        {% if linha.pesquisadores.all %}
+                            <div class="relacionados-section">
+                                <h3 class="relacionados-title">Pesquisadores relacionados à linha:</h3>
+                                <div class="relacionados-list">
+                                    {% for pesquisador in linha.pesquisadores.all %}
+                                        {% if pesquisador.ativo %}
+                                            <div class="relacionado-item">
+                                                {% if pesquisador.link_lattes %}
+                                                    <a href="{{ pesquisador.link_lattes }}" target="_blank" rel="noopener noreferrer" class="relacionado-link">
+                                                        {{ pesquisador.nome }}
+                                                    </a>
+                                                {% else %}
+                                                    <span class="relacionado-nome">{{ pesquisador.nome }}</span>
+                                                {% endif %}
+                                                <span class="relacionado-universidade">({{ pesquisador.universidade }})</span>
+                                                {% if forloop.first %}
+                                                    <span class="coordenador-badge">- Coordenador</span>
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                        
+                        {% if linha.estudantes.all %}
+                            <div class="relacionados-section">
+                                <h3 class="relacionados-title">Estudantes relacionados à linha:</h3>
+                                
+                                {% for nivel, estudantes_nivel in linha.get_estudantes_por_nivel.items %}
+                                    <div class="estudantes-nivel">
+                                        <h4 class="nivel-title">{{ nivel }}:</h4>
+                                        <div class="relacionados-list">
+                                            {% for estudante in estudantes_nivel %}
+                                                <div class="relacionado-item">
+                                                    {% if estudante.link_lattes %}
+                                                        <a href="{{ estudante.link_lattes }}" target="_blank" rel="noopener noreferrer" class="relacionado-link">
+                                                            {{ estudante.nome }}
+                                                        </a>
+                                                    {% else %}
+                                                        <span class="relacionado-nome">{{ estudante.nome }}</span>
+                                                    {% endif %}
+                                                    <span class="relacionado-universidade">
+                                                        ({{ estudante.universidade }}{% if estudante.programa %}/{{ estudante.programa }}{% endif %})
+                                                    </span>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </section>
+            {% endfor %}
+        {% else %}
+            <section class="no-content-section">
+                <div class="no-content-container">
+                    <h2>Nenhuma linha de pesquisa encontrada</h2>
+                    <p>As linhas de pesquisa estão sendo atualizadas. Volte em breve para conferir nossos projetos.</p>
+                </div>
+            </section>
+        {% endif %}
+    </main>
+{% endblock %}
+
+{% block page_scripts %}
+    <script src="{% static 'js/linhas_pesquisa.js' %}"></script>
+    
+    <script>
+        // Funções inline mantidas pois são independentes do problema principal
+        if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+            document.documentElement.classList.add('touch-device');
+        }
+        
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark-theme');
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            performance.mark('dom-ready');
+            
+            const sections = document.querySelectorAll('.animate-fade-in');
+            sections.forEach((section, index) => {
+                section.style.animationDelay = `${index * 0.15}s`;
+            });
+        });
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock %}

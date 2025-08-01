@@ -1,92 +1,48 @@
-/* Animations CSS - 2IBCA */
+/* Animations CSS */
 
 /* Animação de entrada suave */
 @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  /* Animação de destaque */
-  @keyframes pulse {
-    0% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.05);
-    }
-    100% {
-      transform: scale(1);
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  /* Animação de rotação */
-  @keyframes rotate {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
+}
+
+/* Animação de destaque */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
   }
-  
-  /* Animação de deslize horizontal */
-  @keyframes slideInRight {
-    from {
-      opacity: 0;
-      transform: translateX(50px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
+  50% {
+    transform: scale(1.05);
   }
-  
-  /* Classes de utilidade para animações */
-  .animate-fade-in {
-    animation: fadeInUp 0.8s ease forwards;
-    opacity: 0; /* Começa invisível até a animação aplicar */
+  100% {
+    transform: scale(1);
   }
-  
-  .animate-delay-1 {
-    animation-delay: 0.2s;
-  }
-  
-  .animate-delay-2 {
-    animation-delay: 0.4s;
-  }
-  
-  .animate-delay-3 {
-    animation-delay: 0.6s;
-  }
-  
-  .pulse {
-    animation: pulse 2s infinite;
-  }
-  
-  .rotate {
-    animation: rotate 2s linear infinite;
-  }
-  
-  .slide-in {
-    animation: slideInRight 0.5s ease forwards;
-  } 
-  
-  /* Animação de recorte ao aparecer na tela */
-  @keyframes appear {
-    from {
-      opacity: 0;
-      /* Inicia com uma linha horizontal na parte inferior (altura zero) */
-      clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
-    }
-    to {
-      opacity: 1;
-      /* Termina com o card completamente visível */
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-    }
-  }
+}
+
+/* Classes de utilidade para animações */
+.animate-fade-in {
+  animation: fadeInUp 0.7s ease-out forwards;
+  opacity: 0; /* Começa invisível até a animação aplicar */
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+/*
+REMOVIDO: @keyframes expandSection e @keyframes collapseSection
+A animação agora é feita com 'transition' em linhas_pesquisa.css,
+que é mais performático e adequado para este tipo de interação.
+*/
+
+/* Media query para mobile em 'animations.css' também deve ser movido 
+ para 'mobile.css' para melhor organização, mas mantido aqui se preferir. */
+@media (max-width: 768px) {
+/* Os estilos para .linha-pesquisa-header agora estão em mobile.css */
+}

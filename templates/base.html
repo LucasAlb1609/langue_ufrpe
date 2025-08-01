@@ -18,25 +18,59 @@
     
     <link rel="stylesheet" href="{% static 'styles/modular/base.css' %}">
     <link rel="stylesheet" href="{% static 'styles/modular/animations.css'%}">
+    <link rel="stylesheet" href="{% static 'styles/modular/home.css' %}">
     
     {% block page_styles %}{% endblock %}
 </head>
 <body>
+    <!-- Barra superior -->
+    <div class="top-bar">
+        <div class="logo">
+            <a href="{% url 'home' %}" aria-label="Página inicial do LANGUE UFRPE">
+                <img src="{% static 'images/logo_langue.png' %}" alt="Logo Langue UFRPE" width="96" height="96">
+            </a>
+        </div>
+        <div class="search-expand search-bar-red" id="searchExpand" role="search">
+            <input type="text" class="search-input" id="searchInput" placeholder="Pesquisar..." aria-label="Campo de busca">
+            <button class="search-btn" id="searchBtn" aria-label="Pesquisar" type="button">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M21 21L16.514 16.506L21 21ZM19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Navegação principal -->
     <nav class="main-nav" role="navigation" aria-label="Menu principal">
         <ul class="main-nav-list">
-            <li><a href="#linhas-pesquisa">Linhas de Pesquisa</a></li>
-            <li><a href="#producao-bibliografica">Produção Bibliográfica</a></li>
-            <li><a href="#nosso-time">Nosso Time</a></li>
-            <li><a href="#publicacoes">Publicações</a></li>
+            <li><a href="{% url 'home' %}">Conheça o LANGUE UFRPE</a></li>
+            <li><a href="{% url 'linhas_pesquisa:linhas_pesquisa' %}">Linhas de Pesquisa</a></li>
+            <li><a href="/producao-bibliografica/">Produção Bibliográfica</a></li>
+            <li><a href="/nosso-time/">Nosso Time</a></li>
+            <li><a href="/publicacoes/">Publicações</a></li>
         </ul>
-        </nav>
+    </nav>
 
     <main role="main">
         {% block content %}{% endblock %}
     </main>
 
-    {% block footer %}
-        {% endblock %}
+    <!-- Rodapé -->
+    <footer role="contentinfo">
+        <div class="footer-content">
+            <p>Copyright &copy; 2025 LANGUE UFRPE. Todos os direitos reservados.</p>
+            <div class="social-media" role="list" aria-label="Redes sociais">
+                <a href="#facebook" aria-label="Facebook" role="listitem">
+                    <img src="{% static 'images/icons/facebook.svg' %}" alt="Facebook" width="24" height="24" style="filter: brightness(0) invert(1);">
+                </a>                <a href="#instagram" aria-label="Instagram" role="listitem">
+                    <img src="{% static 'images/icons/instagram.svg' %}" alt="Instagram" width="24" height="24" style="filter: brightness(0) invert(1);">
+                </a>
+                <a href="#linkedin" aria-label="LinkedIn" role="listitem">
+                    <img src="{% static 'images/icons/linkedin.svg' %}" alt="LinkedIn" width="24" height="24" style="filter: brightness(0) invert(1);">
+                </a>
+            </div>
+        </div>
+    </footer>
 
     <script src="{% static 'js/base.js'%}"></script>
 
