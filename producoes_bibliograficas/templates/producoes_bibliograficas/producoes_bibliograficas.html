@@ -1,0 +1,274 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ configuracao.titulo_pagina|default:"Produções Bibliográficas" }} - LANGUE UFRPE{% endblock %}
+
+{% block page_styles %}
+    <link rel="stylesheet" href="{% static 'styles/modular/producoes_bibliograficas.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/modular/animations.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/modular/tablet.css' %}" media="screen and (min-width: 769px) and (max-width: 1024px)">
+    <link rel="stylesheet" href="{% static 'styles/modular/mobile.css' %}" media="screen and (max-width: 768px)">
+{% endblock %}
+
+{% block content %}
+    <!-- Seção Hero -->
+    <div class="hero-section">
+        {% if configuracao.imagem_hero %}
+            <div class="hero-img-container">
+                <img src="{{ configuracao.imagem_hero.url }}" alt="Imagem das Produções Bibliográficas" width="1200" height="400">
+            </div>
+        {% endif %}
+        
+        <div class="hero-title-container">
+            <h1 class="hero-title">{{ configuracao.titulo_pagina|default:"Produções Bibliográficas" }}</h1>
+            {% if configuracao.descricao_pagina %}
+                <p class="hero-description">{{ configuracao.descricao_pagina }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Conteúdo principal -->
+    <main role="main" class="producoes-bibliograficas-main">
+        {% if producoes_por_ano %}
+            {% for ano, producoes in producoes_por_ano.items %}
+                <section class="ano-producoes-section retraida animate-fade-in" id="ano-{{ ano }}">
+                    <div class="ano-producoes-header" onclick="toggleAnoSection('{{ ano }}')">
+                        <h2 class="ano-title">{{ ano }}</h2>
+                        <div class="ano-stats">
+                            <span class="total-producoes">{{ producoes|length }} produção{{ producoes|length|pluralize:"s,ões" }}</span>
+                        </div>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    
+                    <div class="ano-producoes-content">
+                        <div class="producoes-list">
+                            {% for producao in producoes %}
+                                <article class="producao-item">
+                                    <div class="producao-content">
+                                        <!-- Autores -->
+                                        <div class="producao-autores">
+                                            {% for autor in producao.autores.all %}
+                                                {% if autor.lattes_link %}
+                                                    <a href="{{ autor.lattes_link }}" target="_blank" rel="noopener noreferrer" class="autor-link">
+                                                        {{ autor.nome|upper }}
+                                                    </a>
+                                                {% else %}
+                                                    <span class="autor-nome">{{ autor.nome|upper }}</span>
+                                                {% endif %}
+                                                {% if not forloop.last %};{% endif %}
+                                            {% endfor %}
+                                        </div>
+                                        
+                                        <!-- Título da produção -->
+                                        <div class="producao-titulo">
+                                            {% if producao.link_producao %}
+                                                <a href="{{ producao.link_producao }}" target="_blank" rel="noopener noreferrer" class="titulo-link">
+                                                    {{ producao.titulo }}
+                                                </a>
+                                            {% else %}
+                                                <span class="titulo-texto">{{ producao.titulo }}</span>
+                                            {% endif %}
+                                        </div>
+                                        
+                                        <!-- Detalhes da publicação -->
+                                        <div class="producao-detalhes">
+                                            {% if producao.local_publicacao %}
+                                                <span class="local-publicacao">{{ producao.local_publicacao }}</span>
+                                            {% endif %}
+                                            
+                                            {% if producao.volume %}
+                                                <span class="volume">, v. {{ producao.volume }}</span>
+                                            {% endif %}
+                                            
+                                            {% if producao.numero %}
+                                                <span class="numero">, n. {{ producao.numero }}</span>
+                                            {% endif %}
+                                            
+                                            {% if producao.paginas %}
+                                                <span class="paginas">, p. {{ producao.paginas }}</span>
+                                            {% endif %}
+                                            
+                                            <span class="ano-publicacao">, {{ producao.ano_publicacao }}.</span>
+                                        </div>
+                                        
+                                        <!-- Tipo de produção -->
+                                        <div class="producao-tipo">
+                                            <span class="tipo-badge tipo-{{ producao.tipo|lower }}">
+                                                {{ producao.get_tipo_display }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </article>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </section>
+            {% endfor %}
+        {% else %}
+            <section class="no-content-section">
+                <div class="no-content-container">
+                    <h2>Nenhuma produção bibliográfica encontrada</h2>
+                    <p>As produções bibliográficas estão sendo atualizadas. Volte em breve para conferir nossas publicações.</p>
+                </div>
+            </section>
+        {% endif %}
+        
+        <!-- Estatísticas -->
+        {% if estatisticas %}
+            <section class="estatisticas-section">
+                <div class="estatisticas-container">
+                    <h3 class="estatisticas-title">Estatísticas das Produções</h3>
+                    <div class="estatisticas-grid">
+                        <div class="estatistica-item">
+                            <span class="estatistica-numero">{{ estatisticas.total_producoes }}</span>
+                            <span class="estatistica-label">Total de Produções</span>
+                        </div>
+                        <div class="estatistica-item">
+                            <span class="estatistica-numero">{{ estatisticas.total_autores }}</span>
+                            <span class="estatistica-label">Autores Únicos</span>
+                        </div>
+                        <div class="estatistica-item">
+                            <span class="estatistica-numero">{{ estatisticas.anos_ativos }}</span>
+                            <span class="estatistica-label">Anos de Publicação</span>
+                        </div>
+                        <div class="estatistica-item">
+                            <span class="estatistica-numero">{{ estatisticas.tipo_mais_comum }}</span>
+                            <span class="estatistica-label">Tipo Mais Comum</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+    </main>
+{% endblock %}
+
+{% block page_scripts %}
+    <script src="{% static 'js/producoes_bibliograficas.js' %}"></script>
+    
+    <!-- Script inline para funcionalidades críticas -->
+    <script>
+        // Função para expandir/retrair seções por ano
+        function toggleAnoSection(ano) {
+            const section = document.getElementById(`ano-${ano}`);
+            const content = section.querySelector('.ano-producoes-content');
+            const icon = section.querySelector('.expand-icon');
+            
+            if (section.classList.contains('retraida')) {
+                // Expandir
+                section.classList.remove('retraida');
+                section.classList.add('expandida');
+                content.style.maxHeight = content.scrollHeight + 'px';
+                icon.style.transform = 'rotate(180deg)';
+                
+                // Animar as produções
+                const producoes = content.querySelectorAll('.producao-item');
+                producoes.forEach((producao, index) => {
+                    setTimeout(() => {
+                        producao.classList.add('animate-fade-in');
+                    }, index * 100);
+                });
+            } else {
+                // Retrair
+                section.classList.remove('expandida');
+                section.classList.add('retraida');
+                content.style.maxHeight = '0';
+                icon.style.transform = 'rotate(0deg)';
+                
+                // Remover animações
+                const producoes = content.querySelectorAll('.producao-item');
+                producoes.forEach(producao => {
+                    producao.classList.remove('animate-fade-in');
+                });
+            }
+        }
+        
+        // Detectar se é dispositivo touch
+        if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+            document.documentElement.classList.add('touch-device');
+        }
+        
+        // Detectar tema preferido do sistema
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark-theme');
+        }
+        
+        // Performance: marcar quando o DOM está pronto
+        document.addEventListener('DOMContentLoaded', function() {
+            performance.mark('dom-ready');
+            
+            // Aplicar animações de entrada com delay
+            const sections = document.querySelectorAll('.ano-producoes-section');
+            sections.forEach((section, index) => {
+                section.style.animationDelay = `${index * 0.2}s`;
+            });
+            
+            // Expandir automaticamente o ano mais recente
+            if (sections.length > 0) {
+                const primeiraSecao = sections[0];
+                const ano = primeiraSecao.id.replace('ano-', '');
+                setTimeout(() => {
+                    toggleAnoSection(ano);
+                }, 500);
+            }
+        });
+        
+        // Smooth scroll para âncoras
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Busca nas produções
+        function filtrarProducoes(termo) {
+            const sections = document.querySelectorAll('.ano-producoes-section');
+            let hasResults = false;
+            
+            sections.forEach(section => {
+                const producoes = section.querySelectorAll('.producao-item');
+                let sectionHasResults = false;
+                
+                producoes.forEach(producao => {
+                    const texto = producao.textContent.toLowerCase();
+                    if (texto.includes(termo.toLowerCase())) {
+                        producao.style.display = 'block';
+                        sectionHasResults = true;
+                        hasResults = true;
+                    } else {
+                        producao.style.display = 'none';
+                    }
+                });
+                
+                // Mostrar/ocultar seção baseado nos resultados
+                if (sectionHasResults) {
+                    section.style.display = 'block';
+                    // Expandir automaticamente se houver resultados
+                    if (section.classList.contains('retraida')) {
+                        const ano = section.id.replace('ano-', '');
+                        toggleAnoSection(ano);
+                    }
+                } else {
+                    section.style.display = termo ? 'none' : 'block';
+                }
+            });
+            
+            return hasResults;
+        }
+        
+        // Conectar busca ao campo de pesquisa do header
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', function() {
+                filtrarProducoes(this.value);
+            });
+        }
+    </script>
+{% endblock %}
+

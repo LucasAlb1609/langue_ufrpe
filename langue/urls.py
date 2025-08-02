@@ -31,10 +31,8 @@ urlpatterns = [
     # Linhas de pesquisa
     path('linhas-de-pesquisa/', include('linhas_pesquisa.urls')),
     
-    # Outras páginas do site
-    path('producao-bibliografica/', TemplateView.as_view(template_name='producao/index.html'), name='producao_bibliografica'),
-    path('nosso-time/', TemplateView.as_view(template_name='time/index.html'), name='nosso_time'),
-    path('publicacoes/', TemplateView.as_view(template_name='publicacoes/index.html'), name='publicacoes'),
+    # Produções Bibliográficas
+    path('producoes-bibliograficas/', include('producoes_bibliograficas.urls')),
     
     # API endpoints (se necessário)
     path('api/', include('rest_framework.urls')),
