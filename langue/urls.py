@@ -33,6 +33,9 @@ urlpatterns = [
     
     # Produções Bibliográficas
     path('producoes-bibliograficas/', include('producoes_bibliograficas.urls')),
+
+    # Publicações
+    path('publicacoes/', include('publicacoes.urls')),
     
     # API endpoints (se necessário)
     path('api/', include('rest_framework.urls')),

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'home',
     'linhas_pesquisa',
     'producoes_bibliograficas',
+    'publicacoes',
 ]
 
 MIDDLEWARE = [
@@ -131,7 +132,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Configurações para arquivos de mídia (uploads)
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
