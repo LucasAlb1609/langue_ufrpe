@@ -64,37 +64,44 @@
         margin: 0 auto 15px;
     }
 
-    /* Menu de navegação principal - Menu hambúrguer */
+    /* --- CORREÇÃO DO MENU HAMBÚRGUER (Layout Horizontal) --- */
+
+    /* Container da navegação principal */
     .main-nav {
-        background: #fff7f5;
-        border-bottom: 1px solid #eee;
+        justify-content: flex-end;
         padding: 0 15px;
+        min-height: 50px;
         position: relative;
     }
 
+    /* Lista do menu (o dropdown) */
     .main-nav-list {
-        flex-direction: column;
-        gap: 0;
+        /* MUDANÇA: Usar display: block simplifica o layout e corrige a largura. */
+        display: block; 
         width: 100%;
         max-height: 0;
         overflow: hidden;
-        transition: max-height 0.3s ease;
+        transition: max-height 0.35s ease-in-out;
         position: absolute;
-        top: 100%;
+        top: 100%; 
         left: 0;
         background: #fff7f5;
         border-top: 1px solid #eee;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
         z-index: 1000;
+        padding: 0;
+        margin: 0;
+        list-style: none;
     }
 
+    /* Estado ativo do menu (expandido) */
     .main-nav-list.active {
-        max-height: 300px;
+        max-height: 500px;
         padding: 10px 0;
+        border-bottom: 1px solid #eee;
     }
 
     .main-nav-list li {
-        width: 100%;
         text-align: center;
         border-bottom: 1px solid #f0f0f0;
     }
@@ -107,11 +114,11 @@
         padding: 15px 20px;
         font-size: 1.1em;
         display: block;
-        width: 100%;
+        width: 100%; /* Garante que o link ocupe todo o espaço do <li> */
     }
 
     .main-nav-list a::after {
-        display: none; /* Remove underline effect em mobile */
+        display: none;
     }
 
     /* Botão hambúrguer */
@@ -119,24 +126,32 @@
         display: block;
         background: none;
         border: none;
-        font-size: 1.5em;
         cursor: pointer;
         padding: 10px;
-        position: absolute;
+        width: 44px;
+        height: 44px;
         right: 15px;
         top: 50%;
         transform: translateY(-50%);
         z-index: 1001;
     }
 
+    /* Ícone do hambúrguer (☰) */
     .nav-toggle::before {
         content: '☰';
         color: #333;
+        font-size: 1.8em;
+        transition: transform 0.2s ease-in-out;
     }
 
+    /* Ícone de fechar (✕) quando o menu está ativo */
     .nav-toggle.active::before {
         content: '✕';
+        transform: rotate(90deg);
     }
+    
+    /* --- FIM DA CORREÇÃO --- */
+
 
     /* Main Content */
     main {
@@ -146,7 +161,7 @@
 
     /* Featured Publications */
     .featured-publications h2 {
-        font-size: 1.8em; /* Reduzido de 2.5em */
+        font-size: 1.8em;
         margin-bottom: 25px;
         text-align: center;
     }
@@ -243,9 +258,6 @@
     a, button {
         min-height: 44px;
         min-width: 44px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
     }
 
     /* Otimizações de performance para mobile */
@@ -263,4 +275,3 @@
         scroll-behavior: smooth;
     }
 }
-

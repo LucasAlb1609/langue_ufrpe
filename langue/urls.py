@@ -31,8 +31,8 @@ urlpatterns = [
     # Linhas de pesquisa
     path('linhas-de-pesquisa/', include('linhas_pesquisa.urls')),
     
-    # Produções Bibliográficas
-    path('producoes-bibliograficas/', include('producoes_bibliograficas.urls')),
+    # Produções Bibliográficas e Publicações PDF
+    path('producoes-e-publicacoes/', include('producoes_bibliograficas.urls')),
 
     # Publicações
     path('publicacoes/', include('publicacoes.urls')),

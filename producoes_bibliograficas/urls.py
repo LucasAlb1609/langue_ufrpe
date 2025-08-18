@@ -1,6 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from . import views
+from .views import producoes_e_publicacoes_view
 
 # Configuração do router para API REST
 router = DefaultRouter()
@@ -11,7 +12,7 @@ app_name = 'producoes_bibliograficas'
 
 urlpatterns = [
     # URLs principais da aplicação
-    path('', views.producoes_bibliograficas_view, name='producoes_bibliograficas'),
+    path('', producoes_e_publicacoes_view, name='producoes_e_publicacoes'),
     path('lista/', views.ProducoesBibliograficasListView.as_view(), name='lista'),
     path('producao/<int:pk>/', views.producao_detail_view, name='producao_detail'),
     

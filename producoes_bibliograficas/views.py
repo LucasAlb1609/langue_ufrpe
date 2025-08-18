@@ -8,6 +8,30 @@ from django.utils.decorators import method_decorator
 from django.contrib import messages
 from collections import OrderedDict
 from .models import ProducaoBibliografica, Autor, ConfiguracaoPaginaProducoes
+from publicacoes.models import PublicacaoPDF
+
+def producoes_e_publicacoes_view(request):
+    # Lógica para Produções Bibliográficas
+    producoes_por_ano = {}
+    for producao in ProducaoBibliografica.objects.all().order_by('-ano_publicacao'):
+        if producao.ano_publicacao not in producoes_por_ano:
+            producoes_por_ano[producao.ano_publicacao] = []
+        producoes_por_ano[producao.ano_publicacao].append(producao)
+
+    # Lógica para Publicações PDF
+    publicacoes_pdf = PublicacaoPDF.objects.all().order_by('-ano_publicacao')
+    anos_disponiveis_pdf = sorted(list(set(publicacoes_pdf.values_list('ano_publicacao', flat=True))), reverse=True)
+
+    context = {
+        'producoes_por_ano': producoes_por_ano,
+        'publicacoes_pdf': publicacoes_pdf,
+        'anos_disponiveis_pdf': anos_disponiveis_pdf,
+        'configuracao': None,  # Adicione sua lógica de configuração se houver
+        'estatisticas_producoes': None, # Adicione sua lógica de estatísticas se houver
+        'estatisticas_publicacoes_pdf': None, # Adicione sua lógica de estatísticas se houver
+        'is_paginated_pdf': False # Adicione sua lógica de paginação se houver
+    }
+    return render(request, 'producoes_bibliograficas/producoes_bibliograficas.html', context)
 
 
 class ProducoesBibliograficasListView(ListView):
