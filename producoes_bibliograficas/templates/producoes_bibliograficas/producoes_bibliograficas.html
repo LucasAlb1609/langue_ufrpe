@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ configuracao.titulo_pagina|default:"Produções Bibliográficas" }} - LANGUE UFRPE{% endblock %}
+{% block title %}{{ configuracao.titulo_pagina|default:"Produções e Publicações" }} - LANGUE UFRPE{% endblock %}
 
 {% block page_styles %}
     <link rel="stylesheet" href="{% static 'styles/modular/producoes_bibliograficas.css' %}">
@@ -15,12 +15,12 @@
     <div class="hero-section">
         {% if configuracao.imagem_hero %}
             <div class="hero-img-container">
-                <img src="{{ configuracao.imagem_hero.url }}" alt="Imagem das Produções Bibliográficas" width="1200" height="400">
+                <img src="{{ configuracao.imagem_hero.url }}" alt="Imagem das Produções e Publicações" width="1200" height="400">
             </div>
         {% endif %}
         
         <div class="hero-title-container">
-            <h1 class="hero-title">{{ configuracao.titulo_pagina|default:"Produções Bibliográficas" }}</h1>
+            <h1 class="hero-title">{{ configuracao.titulo_pagina|default:"Produções e Publicações" }}</h1>
             {% if configuracao.descricao_pagina %}
                 <p class="hero-description">{{ configuracao.descricao_pagina }}</p>
             {% endif %}
@@ -28,247 +28,386 @@
     </div>
 
     <!-- Conteúdo principal -->
-    <main role="main" class="producoes-bibliograficas-main">
-        {% if producoes_por_ano %}
-            {% for ano, producoes in producoes_por_ano.items %}
-                <section class="ano-producoes-section retraida animate-fade-in" id="ano-{{ ano }}">
-                    <div class="ano-producoes-header" onclick="toggleAnoSection('{{ ano }}')">
-                        <h2 class="ano-title">{{ ano }}</h2>
-                        <div class="ano-stats">
-                            <span class="total-producoes">{{ producoes|length }} produção{{ producoes|length|pluralize:"s,ões" }}</span>
+    <main role="main" class="conteudo-unificado-main">
+        <!-- Seção de Produções Bibliográficas -->
+        <section class="secao-producoes-bibliograficas">
+            <h2 class="secao-titulo">Produções Bibliográficas</h2>
+            {% if producoes_por_ano %}
+                {% for ano, producoes in producoes_por_ano.items %}
+                    <section class="ano-producoes-section retraida animate-fade-in" id="ano-{{ ano }}">
+                        <div class="ano-producoes-header" onclick="toggleAnoSection('{{ ano }}')">
+                            <h3 class="ano-title">{{ ano }}</h3>
+                            <div class="ano-stats">
+                                <span class="total-producoes">{{ producoes|length }} produção{{ producoes|length|pluralize:"s,ões" }}</span>
+                            </div>
+                            <span class="expand-icon">▼</span>
                         </div>
-                        <span class="expand-icon">▼</span>
-                    </div>
-                    
-                    <div class="ano-producoes-content">
-                        <div class="producoes-list">
-                            {% for producao in producoes %}
-                                <article class="producao-item">
-                                    <div class="producao-content">
-                                        <!-- Autores -->
-                                        <div class="producao-autores">
-                                            {% for autor in producao.autores.all %}
-                                                {% if autor.lattes_link %}
-                                                    <a href="{{ autor.lattes_link }}" target="_blank" rel="noopener noreferrer" class="autor-link">
-                                                        {{ autor.nome|upper }}
+                        
+                        <div class="ano-producoes-content">
+                            <div class="producoes-list">
+                                {% for producao in producoes %}
+                                    <article class="producao-item">
+                                        <div class="producao-content">
+                                            <!-- Autores -->
+                                            <div class="producao-autores">
+                                                {% for autor in producao.autores.all %}
+                                                    {% if autor.lattes_link %}
+                                                        <a href="{{ autor.lattes_link }}" target="_blank" rel="noopener noreferrer" class="autor-link">
+                                                            {{ autor.nome|upper }}
+                                                        </a>
+                                                    {% else %}
+                                                        <span class="autor-nome">{{ autor.nome|upper }}</span>
+                                                    {% endif %}
+                                                    {% if not forloop.last %};{% endif %}
+                                                {% endfor %}
+                                            </div>
+                                            
+                                            <!-- Título da produção -->
+                                            <div class="producao-titulo">
+                                                {% if producao.link_producao %}
+                                                    <a href="{{ producao.link_producao }}" target="_blank" rel="noopener noreferrer" class="titulo-link">
+                                                        {{ producao.titulo }}
                                                     </a>
                                                 {% else %}
-                                                    <span class="autor-nome">{{ autor.nome|upper }}</span>
+                                                    <span class="titulo-texto">{{ producao.titulo }}</span>
                                                 {% endif %}
-                                                {% if not forloop.last %};{% endif %}
-                                            {% endfor %}
-                                        </div>
-                                        
-                                        <!-- Título da produção -->
-                                        <div class="producao-titulo">
-                                            {% if producao.link_producao %}
-                                                <a href="{{ producao.link_producao }}" target="_blank" rel="noopener noreferrer" class="titulo-link">
-                                                    {{ producao.titulo }}
-                                                </a>
-                                            {% else %}
-                                                <span class="titulo-texto">{{ producao.titulo }}</span>
-                                            {% endif %}
-                                        </div>
-                                        
-                                        <!-- Detalhes da publicação -->
-                                        <div class="producao-detalhes">
-                                            {% if producao.local_publicacao %}
-                                                <span class="local-publicacao">{{ producao.local_publicacao }}</span>
-                                            {% endif %}
+                                            </div>
                                             
-                                            {% if producao.volume %}
-                                                <span class="volume">, v. {{ producao.volume }}</span>
-                                            {% endif %}
+                                            <!-- Detalhes da publicação -->
+                                            <div class="producao-detalhes">
+                                                {% if producao.local_publicacao %}
+                                                    <span class="local-publicacao">{{ producao.local_publicacao }}</span>
+                                                {% endif %}
+                                                
+                                                {% if producao.volume %}
+                                                    <span class="volume">, v. {{ producao.volume }}</span>
+                                                {% endif %}
+                                                
+                                                {% if producao.numero %}
+                                                    <span class="numero">, n. {{ producao.numero }}</span>
+                                                {% endif %}
+                                                
+                                                {% if producao.paginas %}
+                                                    <span class="paginas">, p. {{ producao.paginas }}</span>
+                                                {% endif %}
+                                                
+                                                <span class="ano-publicacao">, {{ producao.ano_publicacao }}.</span>
+                                            </div>
                                             
-                                            {% if producao.numero %}
-                                                <span class="numero">, n. {{ producao.numero }}</span>
-                                            {% endif %}
-                                            
-                                            {% if producao.paginas %}
-                                                <span class="paginas">, p. {{ producao.paginas }}</span>
-                                            {% endif %}
-                                            
-                                            <span class="ano-publicacao">, {{ producao.ano_publicacao }}.</span>
+                                            <!-- Tipo de produção -->
+                                            <div class="producao-tipo">
+                                                <span class="tipo-badge tipo-{{ producao.tipo|lower }}">
+                                                    {{ producao.get_tipo_display }}
+                                                </span>
+                                            </div>
                                         </div>
-                                        
-                                        <!-- Tipo de produção -->
-                                        <div class="producao-tipo">
-                                            <span class="tipo-badge tipo-{{ producao.tipo|lower }}">
-                                                {{ producao.get_tipo_display }}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </article>
-                            {% endfor %}
+                                    </article>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </section>
+                {% endfor %}
+            {% else %}
+                <section class="no-content-section">
+                    <div class="no-content-container">
+                        <h2>Nenhuma produção bibliográfica encontrada</h2>
+                        <p>As produções bibliográficas estão sendo atualizadas. Volte em breve para conferir nossas publicações.</p>
+                    </div>
+                </section>
+            {% endif %}
+            
+            <!-- Estatísticas de Produções -->
+            {% if estatisticas_producoes %}
+                <section class="estatisticas-section">
+                    <div class="estatisticas-container">
+                        <h3 class="estatisticas-title">Estatísticas das Produções</h3>
+                        <div class="estatisticas-grid">
+                            <div class="estatistica-item">
+                                <span class="estatistica-numero">{{ estatisticas_producoes.total_producoes }}</span>
+                                <span class="estatistica-label">Total de Produções</span>
+                            </div>
+                            <div class="estatistica-item">
+                                <span class="estatistica-numero">{{ estatisticas_producoes.total_autores }}</span>
+                                <span class="estatistica-label">Autores Únicos</span>
+                            </div>
+                            <div class="estatistica-item">
+                                <span class="estatistica-numero">{{ estatisticas_producoes.anos_ativos }}</span>
+                                <span class="estatistica-label">Anos de Publicação</span>
+                            </div>
+                            <div class="estatistica-item">
+                                <span class="estatistica-numero">{{ estatisticas_producoes.tipo_mais_comum }}</span>
+                                <span class="estatistica-label">Tipo Mais Comum</span>
+                            </div>
                         </div>
                     </div>
                 </section>
-            {% endfor %}
-        {% else %}
-            <section class="no-content-section">
-                <div class="no-content-container">
-                    <h2>Nenhuma produção bibliográfica encontrada</h2>
-                    <p>As produções bibliográficas estão sendo atualizadas. Volte em breve para conferir nossas publicações.</p>
-                </div>
-            </section>
-        {% endif %}
-        
-        <!-- Estatísticas -->
-        {% if estatisticas %}
-            <section class="estatisticas-section">
-                <div class="estatisticas-container">
-                    <h3 class="estatisticas-title">Estatísticas das Produções</h3>
-                    <div class="estatisticas-grid">
-                        <div class="estatistica-item">
-                            <span class="estatistica-numero">{{ estatisticas.total_producoes }}</span>
-                            <span class="estatistica-label">Total de Produções</span>
-                        </div>
-                        <div class="estatistica-item">
-                            <span class="estatistica-numero">{{ estatisticas.total_autores }}</span>
-                            <span class="estatistica-label">Autores Únicos</span>
-                        </div>
-                        <div class="estatistica-item">
-                            <span class="estatistica-numero">{{ estatisticas.anos_ativos }}</span>
-                            <span class="estatistica-label">Anos de Publicação</span>
-                        </div>
-                        <div class="estatistica-item">
-                            <span class="estatistica-numero">{{ estatisticas.tipo_mais_comum }}</span>
-                            <span class="estatistica-label">Tipo Mais Comum</span>
-                        </div>
+            {% endif %}
+        </section>
+
+        <!-- Seção de Publicações PDF -->
+        <section class="secao-publicacoes-pdf">
+            <h2 class="secao-titulo">Publicações em PDF</h2>
+            <!-- Filtros e Busca para Publicações PDF -->
+            <div class="filtros-container">
+                <div class="filtros-wrapper">
+                    <div class="busca-container">
+                        <input type="text" id="buscaPublicacoesPDF" placeholder="Buscar por título, organizador ou categoria..." class="busca-input">
+                        <button type="button" class="busca-btn" id="btnBuscarPDF">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 21L16.514 16.506L21 21ZM19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <div class="filtros-grupo">
+                        <select id="filtroCategoriaPDF" class="filtro-select">
+                            <option value="">Todas as categorias</option>
+                            <option value="LIVRO">Livros</option>
+                            <option value="REVISTA">Revistas</option>
+                            <option value="ANAIS">Anais de Evento</option>
+                            <option value="RELATORIO">Relatórios</option>
+                            <option value="MANUAL">Manuais</option>
+                            <option value="GUIA">Guias</n                            <option value="OUTROS">Outros</option>
+                        </select>
+                        
+                        <select id="filtroAnoPDF" class="filtro-select">
+                            <option value="">Todos os anos</option>
+                            {% for ano in anos_disponiveis_pdf %}
+                                <option value="{{ ano }}">{{ ano }}</option>
+                            {% endfor %}
+                        </select>
+                        
+                        <select id="ordenacaoPDF" class="filtro-select">
+                            <option value="-ano_publicacao">Mais recentes</option>
+                            <option value="ano_publicacao">Mais antigos</option>
+                            <option value="titulo">Título A-Z</option>
+                            <option value="-titulo">Título Z-A</option>
+                            <option value="-downloads">Mais baixados</option>
+                        </select>
                     </div>
                 </div>
-            </section>
-        {% endif %}
+            </div>
+
+            <!-- Grid de Publicações PDF -->
+            <div class="publicacoes-grid" id="publicacoesGridPDF">
+                {% for publicacao in publicacoes_pdf %}
+                    <article class="publicacao-card animate-fade-in" 
+                             data-categoria="{{ publicacao.categoria }}" 
+                             data-ano="{{ publicacao.ano_publicacao }}"
+                             data-titulo="{{ publicacao.titulo|lower }}"
+                             data-organizadores="{{ publicacao.get_organizadores_display|lower }}">
+                        
+                        <!-- Thumbnail clicável -->
+                        <div class="publicacao-thumbnail">
+                            {% if publicacao.thumbnail %}
+                                <a href="{{ publicacao.arquivo_pdf.url }}" 
+                                   target="_blank" 
+                                   class="thumbnail-link"
+                                   onclick="incrementarDownload('{{ publicacao.id }}')"
+                                   aria-label="Abrir PDF: {{ publicacao.titulo }}">
+                                    <img src="{{ publicacao.thumbnail.url }}" 
+                                         alt="Capa de {{ publicacao.titulo }}" 
+                                         loading="lazy"
+                                         class="thumbnail-img">
+                                    <div class="thumbnail-overlay">
+                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <polyline points="10,9 9,9 8,9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <span>Abrir PDF</span>
+                                    </div>
+                                </a>
+                            {% else %}
+                                <div class="thumbnail-placeholder">
+                                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <span>PDF</span>
+                                </div>
+                            {% endif %}
+                            
+                            <!-- Badge da categoria -->
+                            <div class="categoria-badge categoria-{{ publicacao.categoria|lower }}">
+                                {{ publicacao.get_categoria_display }}
+                            </div>
+                            
+                            {% if publicacao.destaque %}
+                                <div class="destaque-badge">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2" fill="currentColor"/>
+                                    </svg>
+                                    Destaque
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Informações da publicação -->
+                        <div class="publicacao-info">
+                            <h3 class="publicacao-titulo">
+                                <a href="{{ publicacao.arquivo_pdf.url }}" 
+                                   target="_blank" 
+                                   onclick="incrementarDownload('{{ publicacao.id }}')"
+                                   class="titulo-link">
+                                    {{ publicacao.titulo }}
+                                    {% if publicacao.subtitulo %}
+                                        <span class="subtitulo">: {{ publicacao.subtitulo }}</span>
+                                    {% endif %}
+                                </a>
+                            </h3>
+                            
+                            <div class="publicacao-organizadores">
+                                {% for organizador in publicacao.organizadores.all %}
+                                    {% if organizador.lattes_link %}
+                                        <a href="{{ organizador.lattes_link }}" 
+                                           target="_blank" 
+                                           class="organizador-link"
+                                           title="Ver currículo Lattes de {{ organizador.nome }}">
+                                            {{ organizador.nome }}
+                                        </a>
+                                    {% else %}
+                                        <span class="organizador-nome">{{ organizador.nome }}</span>
+                                    {% endif %}
+                                    {% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            </div>
+                            
+                            {% if publicacao.descricao %}
+                                <p class="publicacao-descricao">{{ publicacao.descricao|truncatewords:20 }}</p>
+                            {% endif %}
+                            
+                            <div class="publicacao-meta">
+                                <div class="meta-item">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                                        <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                        <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                        <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                    </svg>
+                                    <span>{{ publicacao.ano_publicacao }}</span>
+                                </div>
+                                
+                                {% if publicacao.editora %}
+                                    <div class="meta-item">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M6.5 2H20V22H6.5A2.5 2.5 0 0 1 4 19.5V4.5A2.5 2.5 0 0 1 6.5 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <span>{{ publicacao.editora }}</span>
+                                    </div>
+                                {% endif %}
+                                
+                                <div class="meta-item">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <polyline points="7,10 12,15 17,10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <line x1="12" y1="15" x2="12" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                    </svg>
+                                    <span>{{ publicacao.downloads }} download{{ publicacao.downloads|pluralize }}</span>
+                                </div>
+                                
+                                {% if publicacao.tamanho_arquivo_mb %}
+                                    <div class="meta-item">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <span>{{ publicacao.tamanho_arquivo_mb }} MB</span>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </article>
+                {% empty %}
+                    <div class="sem-publicacoes">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <h3>Nenhuma publicação encontrada</h3>
+                        <p>Não há publicações disponíveis no momento ou que correspondam aos filtros selecionados.</p>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Paginação de Publicações PDF -->
+            {% if is_paginated_pdf %}
+                <div class="paginacao-container">
+                    <nav class="paginacao" aria-label="Navegação de páginas">
+                        {% if page_obj_pdf.has_previous %}
+                            <a href="?page_pdf=1" class="paginacao-link" aria-label="Primeira página">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <polyline points="11,17 6,12 11,7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <polyline points="18,17 13,12 18,7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </a>
+                            <a href="?page_pdf={{ page_obj_pdf.previous_page_number }}" class="paginacao-link" aria-label="Página anterior">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <polyline points="15,18 9,12 15,6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </a>
+                        {% endif %}
+                        
+                        {% for i in page_obj_pdf.paginator.page_range %}
+                            {% if page_obj_pdf.number == i %}
+                                <span class="paginacao-link current" aria-current="page">{{ i }}</span>
+                            {% elif i > page_obj_pdf.number|add:"-3" and i < page_obj_pdf.number|add:"3" %}
+                                <a href="?page_pdf={{ i }}" class="paginacao-link">{{ i }}</a>
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% if page_obj_pdf.has_next %}
+                            <a href="?page_pdf={{ page_obj_pdf.next_page_number }}" class="paginacao-link" aria-label="Próxima página">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <polyline points="9,18 15,12 9,6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </a>
+                            <a href="?page_pdf={{ page_obj_pdf.paginator.num_pages }}" class="paginacao-link" aria-label="Última página">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <polyline points="13,17 18,12 13,7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <polyline points="6,17 11,12 6,7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </a>
+                        {% endif %}
+                    </nav>
+                </div>
+            {% endif %}
+
+            <!-- Estatísticas de Publicações PDF -->
+            {% if estatisticas_publicacoes_pdf %}
+                <section class="estatisticas-section">
+                    <div class="estatisticas-container">
+                        <h3 class="estatisticas-title">Estatísticas das Publicações em PDF</h3>
+                        <div class="estatisticas-grid">
+                            <div class="estatistica-item">
+                                <span class="estatistica-numero">{{ estatisticas_publicacoes_pdf.total_publicacoes }}</span>
+                                <span class="estatistica-label">Total de Publicações</span>
+                            </div>
+                            <div class="estatistica-item">
+                                <span class="estatistica-numero">{{ estatisticas_publicacoes_pdf.total_organizadores }}</span>
+                                <span class="estatistica-label">Organizadores Únicos</span>
+                            </div>
+                            <div class="estatistica-item">
+                                <span class="estatistica-numero">{{ estatisticas_publicacoes_pdf.anos_ativos }}</span>
+                                <span class="estatistica-label">Anos de Publicação</span>
+                            </div>
+                            <div class="estatistica-item">
+                                <span class="estatistica-numero">{{ estatisticas_publicacoes_pdf.categoria_mais_comum }}</span>
+                                <span class="estatistica-label">Categoria Mais Comum</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            {% endif %}
+        </section>
     </main>
 {% endblock %}
 
 {% block page_scripts %}
     <script src="{% static 'js/producoes_bibliograficas.js' %}"></script>
-    
-    <!-- Script inline para funcionalidades críticas -->
-    <script>
-        // Função para expandir/retrair seções por ano
-        function toggleAnoSection(ano) {
-            const section = document.getElementById(`ano-${ano}`);
-            const content = section.querySelector('.ano-producoes-content');
-            const icon = section.querySelector('.expand-icon');
-            
-            if (section.classList.contains('retraida')) {
-                // Expandir
-                section.classList.remove('retraida');
-                section.classList.add('expandida');
-                content.style.maxHeight = content.scrollHeight + 'px';
-                icon.style.transform = 'rotate(180deg)';
-                
-                // Animar as produções
-                const producoes = content.querySelectorAll('.producao-item');
-                producoes.forEach((producao, index) => {
-                    setTimeout(() => {
-                        producao.classList.add('animate-fade-in');
-                    }, index * 100);
-                });
-            } else {
-                // Retrair
-                section.classList.remove('expandida');
-                section.classList.add('retraida');
-                content.style.maxHeight = '0';
-                icon.style.transform = 'rotate(0deg)';
-                
-                // Remover animações
-                const producoes = content.querySelectorAll('.producao-item');
-                producoes.forEach(producao => {
-                    producao.classList.remove('animate-fade-in');
-                });
-            }
-        }
-        
-        // Detectar se é dispositivo touch
-        if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-            document.documentElement.classList.add('touch-device');
-        }
-        
-        // Detectar tema preferido do sistema
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.documentElement.classList.add('dark-theme');
-        }
-        
-        // Performance: marcar quando o DOM está pronto
-        document.addEventListener('DOMContentLoaded', function() {
-            performance.mark('dom-ready');
-            
-            // Aplicar animações de entrada com delay
-            const sections = document.querySelectorAll('.ano-producoes-section');
-            sections.forEach((section, index) => {
-                section.style.animationDelay = `${index * 0.2}s`;
-            });
-            
-            // Expandir automaticamente o ano mais recente
-            if (sections.length > 0) {
-                const primeiraSecao = sections[0];
-                const ano = primeiraSecao.id.replace('ano-', '');
-                setTimeout(() => {
-                    toggleAnoSection(ano);
-                }, 500);
-            }
-        });
-        
-        // Smooth scroll para âncoras
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-        
-        // Busca nas produções
-        function filtrarProducoes(termo) {
-            const sections = document.querySelectorAll('.ano-producoes-section');
-            let hasResults = false;
-            
-            sections.forEach(section => {
-                const producoes = section.querySelectorAll('.producao-item');
-                let sectionHasResults = false;
-                
-                producoes.forEach(producao => {
-                    const texto = producao.textContent.toLowerCase();
-                    if (texto.includes(termo.toLowerCase())) {
-                        producao.style.display = 'block';
-                        sectionHasResults = true;
-                        hasResults = true;
-                    } else {
-                        producao.style.display = 'none';
-                    }
-                });
-                
-                // Mostrar/ocultar seção baseado nos resultados
-                if (sectionHasResults) {
-                    section.style.display = 'block';
-                    // Expandir automaticamente se houver resultados
-                    if (section.classList.contains('retraida')) {
-                        const ano = section.id.replace('ano-', '');
-                        toggleAnoSection(ano);
-                    }
-                } else {
-                    section.style.display = termo ? 'none' : 'block';
-                }
-            });
-            
-            return hasResults;
-        }
-        
-        // Conectar busca ao campo de pesquisa do header
-        const searchInput = document.getElementById('searchInput');
-        if (searchInput) {
-            searchInput.addEventListener('input', function() {
-                filtrarProducoes(this.value);
-            });
-        }
-    </script>
 {% endblock %}
+
 
