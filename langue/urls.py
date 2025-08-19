@@ -27,6 +27,9 @@ urlpatterns = [
     
     # Página inicial
     path('', TemplateView.as_view(template_name='home/index.html'), name='home'),
+
+    # Mecanismo de busca
+    path('busca/', include('search.urls')),
     
     # Linhas de pesquisa
     path('linhas-de-pesquisa/', include('linhas_pesquisa.urls')),

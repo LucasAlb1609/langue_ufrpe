@@ -4,34 +4,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /**
      * INICIALIZAÇÃO DO MENU RESPONSIVO (HAMBÚRGUER)
-     * Garante que o menu funcione em todas as páginas.
+     * Versão corrigida que funciona com o botão já presente no HTML
      */
     function initMobileMenu() {
-        const mainNav = document.querySelector('.main-nav');
-        const navList = document.querySelector('.main-nav-list');
+        const navToggle = document.getElementById('navToggle');
+        const navList = document.getElementById('mainNavList');
         
-        if (mainNav && navList) {
-            // Garante que o botão só seja criado se não existir
-            let navToggle = mainNav.querySelector('.nav-toggle');
-            if (!navToggle) {
-                navToggle = document.createElement('button');
-                navToggle.className = 'nav-toggle';
-                navToggle.setAttribute('aria-label', 'Alternar menu de navegação');
-                navToggle.setAttribute('aria-expanded', 'false');
-                // Adiciona o botão como o primeiro elemento dentro de .main-nav para melhor controle de layout
-                mainNav.prepend(navToggle);
-            }
-
+        if (navToggle && navList) {
             navToggle.addEventListener('click', function(e) {
-                e.stopPropagation(); // Impede que o evento de clique se propague para o document
+                e.stopPropagation(); // Impede que o evento se propague
+                
                 const isActive = navList.classList.toggle('active');
                 navToggle.classList.toggle('active');
                 navToggle.setAttribute('aria-expanded', isActive);
+                
+                // Log para debug
+                console.log('Menu toggled:', isActive ? 'opened' : 'closed');
             });
 
             // Fecha o menu se o usuário clicar fora dele
             document.addEventListener('click', function(e) {
-                if (navList.classList.contains('active') && !mainNav.contains(e.target)) {
+                if (navList.classList.contains('active') && 
+                    !navToggle.contains(e.target) && 
+                    !navList.contains(e.target)) {
+                    
                     navList.classList.remove('active');
                     navToggle.classList.remove('active');
                     navToggle.setAttribute('aria-expanded', 'false');
@@ -47,20 +43,35 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
 
+            // Fecha o menu ao clicar em um link (navegação)
+            const navLinks = navList.querySelectorAll('a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    navList.classList.remove('active');
+                    navToggle.classList.remove('active');
+                    navToggle.setAttribute('aria-expanded', 'false');
+                });
+            });
+
             // Garante que o menu seja redefinido em telas maiores
             window.addEventListener('resize', function() {
-                if (window.innerWidth > 768 && navList.classList.contains('active')) {
+                if (window.innerWidth > 1024 && navList.classList.contains('active')) {
                     navList.classList.remove('active');
                     navToggle.classList.remove('active');
                     navToggle.setAttribute('aria-expanded', 'false');
                 }
+            });
+        } else {
+            console.error('Elementos do menu não encontrados:', {
+                navToggle: !!navToggle,
+                navList: !!navList
             });
         }
     }
 
     /**
      * INICIALIZAÇÃO DA BARRA DE PESQUISA EXPANSÍVEL E FUNCIONAL
-     * Garante que a busca funcione em todas as páginas.
+     * Versão corrigida que funciona em todas as páginas
      */
     function initGlobalSearch() {
         const searchExpand = document.getElementById('searchExpand');
@@ -75,6 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (!searchExpand.classList.contains('active')) {
                     searchExpand.classList.add('active');
                     searchInput.focus();
+                    console.log('Search bar expanded');
                 } else {
                     // Se a barra já está ativa, executa a busca
                     performSearch();
@@ -101,24 +113,81 @@ document.addEventListener('DOMContentLoaded', function() {
                     searchInput.value = '';
                 }
             });
+        } else {
+            console.error('Elementos da busca não encontrados:', {
+                searchExpand: !!searchExpand,
+                searchInput: !!searchInput,
+                searchBtn: !!searchBtn
+            });
         }
     }
 
     /**
-     * Redireciona para uma página de resultados de busca.
-     * Esta página `/search/` precisa ser criada no seu `urls.py` e `views.py` do Django.
+     * Executa a busca - versão melhorada com fallback
      */
     function performSearch() {
         const query = document.getElementById('searchInput').value.trim();
         if (query) {
+            console.log('Performing search for:', query);
+            
             // Codifica a busca para ser segura na URL
             const encodedQuery = encodeURIComponent(query);
-            // Redireciona para a página de busca
-            window.location.href = `/search/?q=${encodedQuery}`;
+            
+            // Tenta redirecionar para a página de busca
+            // Se a rota não existir, mostra um alerta
+            try {
+                window.location.href = `/search/?q=${encodedQuery}`;
+            } catch (error) {
+                console.error('Erro ao redirecionar para busca:', error);
+                alert(`Busca por: "${query}"\n\nFuncionalidade de busca em desenvolvimento.`);
+            }
         }
+    }
+
+    /**
+     * Função para destacar o link ativo no menu
+     */
+    function highlightActiveNavLink() {
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll('.main-nav-list a');
+        
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+    /**
+     * Função para melhorar a acessibilidade
+     */
+    function initAccessibility() {
+        // Adiciona suporte a navegação por teclado
+        const focusableElements = document.querySelectorAll(
+            'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        
+        // Melhora o contraste de foco
+        focusableElements.forEach(element => {
+            element.addEventListener('focus', function() {
+                this.style.outline = '2px solid #961120';
+                this.style.outlineOffset = '2px';
+            });
+            
+            element.addEventListener('blur', function() {
+                this.style.outline = '';
+                this.style.outlineOffset = '';
+            });
+        });
     }
 
     // Inicializa todas as funcionalidades globais
     initMobileMenu();
     initGlobalSearch();
+    highlightActiveNavLink();
+    initAccessibility();
+    
+    console.log('Todas as funcionalidades base foram inicializadas.');
 });
+

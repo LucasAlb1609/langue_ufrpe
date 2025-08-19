@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'linhas_pesquisa',
     'producoes_bibliograficas',
     'publicacoes',
+    'search',
 ]
 
 MIDDLEWARE = [
