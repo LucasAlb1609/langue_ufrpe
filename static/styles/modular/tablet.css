@@ -29,12 +29,24 @@
         padding: 0 30px;
         min-height: 60px;
         position: relative;
+        width: 100%;
+        box-sizing: border-box;
     }
 
     /* Botão hambúrguer visível em tablet */
     .nav-toggle {
         display: flex !important;
-        order: 2; /* Posiciona à direita */
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: none;
+        color: #961120; /* cor visível */
+        font-size: 2em;
+        z-index: 1001;
+        position: absolute;
+        right: 30px;
+        top: 50%;
+        transform: translateY(-50%);
     }
 
     /* Lista do menu (o dropdown) */
@@ -52,6 +64,7 @@
         padding: 0;
         margin: 0;
         list-style: none;
+        box-sizing: border-box;
         
         /* Estado inicial: escondido */
         max-height: 0;
