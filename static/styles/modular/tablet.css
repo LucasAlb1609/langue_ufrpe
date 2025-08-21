@@ -49,6 +49,18 @@
         transform: translateY(-50%);
     }
 
+    .nav-toggle::before {
+        content: '☰';
+        color: #333333;
+        font-size: 2em;
+        display: block;
+    }
+
+    .nav-toggle.active::before {
+        content: '✕';
+        color: #333333;
+    }
+
     /* Lista do menu (o dropdown) */
     .main-nav-list {
         position: absolute;
