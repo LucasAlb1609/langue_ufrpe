@@ -39,6 +39,9 @@ urlpatterns = [
 
     # Publicações
     path('publicacoes/', include('publicacoes.urls')),
+
+    # Galeria de Imagens
+    path('galeria/', include('galeria.urls', namespace='galeria')),
     
     # API endpoints (se necessário)
     path('api/', include('rest_framework.urls')),

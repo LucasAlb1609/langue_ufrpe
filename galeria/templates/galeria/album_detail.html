@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ album.title }} - {{ block.super }}{% endblock %}
+
+{% block page_styles %}
+    <link rel="stylesheet" href="{% static 'styles/modular/galeria.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="gallery-container">
+    <header class="album-detail-header animate-fade-in">
+        <a href="{% url 'galeria:album_list' %}" class="back-to-gallery-link">&larr; Voltar para todos os álbuns</a>
+        <h1>{{ album.title }}</h1>
+        {% if album.description %}
+            <p class="album-description">{{ album.description }}</p>
+        {% endif %}
+    </header>
+
+    <section class="photo-grid">
+        {% for photo in photos %}
+        <div class="photo-item animate-fade-in" style="animation-delay: {% widthratio forloop.counter0 1 50 %}ms;">
+            <a href="{{ photo.image.url }}" data-lightbox="album-{{ album.pk }}" data-title="{{ photo.caption|default:'' }}">
+                <img src="{{ photo.image.url }}" alt="{{ photo.caption|default:'Foto do álbum '|add:album.title }}">
+            </a>
+        </div>
+        {% empty %}
+        <p class="no-photos-message">Este álbum ainda não possui fotos.</p>
+        {% endfor %}
+    </section>
+</div>
+
+<!-- Lightbox2 JS e CSS para visualização de imagem -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox-plus-jquery.min.js"></script>
+{% endblock %}
