@@ -1,0 +1,240 @@
+/* galeria/static/galeria/css/galeria.css */
+
+/* Variáveis de Cor (baseadas no seu resumo) */
+:root {
+    --primary-color: #721a1a;
+    --secondary-color: #961120;
+    --background-light: #fff7f5;
+    --text-dark: #333333;
+    --border-color: #eee;
+    --shadow-light: rgba(0, 0, 0, 0.08);
+    --shadow-hover: rgba(140, 20, 30, 0.15);
+}
+
+/* Container Principal da Galeria */
+.gallery-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* Cabeçalho da Página da Galeria */
+.gallery-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.gallery-header h1 {
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.gallery-header p {
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Grid de Álbuns */
+.album-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.album-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.album-card {
+    background-color: var(--background-light);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px var(--shadow-light);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.album-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px var(--shadow-hover);
+}
+
+.album-card-image-wrapper {
+    width: 100%;
+    padding-top: 65%; /* Proporção da imagem (aspect-ratio) */
+    position: relative;
+    overflow: hidden;
+}
+
+.album-card-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.album-card:hover .album-card-image {
+    transform: scale(1.05);
+}
+
+.album-card-content {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.album-card-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin: 0 0 10px 0;
+}
+
+.album-card-meta {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    opacity: 0.8;
+}
+
+.album-card-count {
+    background-color: rgba(150, 17, 32, 0.1);
+    padding: 4px 8px;
+    border-radius: 20px;
+    font-weight: 500;
+    color: var(--secondary-color);
+}
+
+/* Página de Detalhes do Álbum */
+.album-detail-header {
+    margin-bottom: 40px;
+}
+
+.back-to-gallery-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.back-to-gallery-link:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+.album-detail-header h1 {
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.album-description {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    max-width: 800px;
+}
+
+/* Grid de Fotos */
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.photo-item a {
+    display: block;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px var(--shadow-light);
+    transition: box-shadow 0.3s ease;
+}
+
+.photo-item a:hover {
+    box-shadow: 0 6px 16px var(--shadow-hover);
+}
+
+.photo-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.photo-item a:hover img {
+    transform: scale(1.05);
+}
+
+/* Mensagens de "vazio" */
+.no-albums-message, .no-photos-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+    font-size: 1.1rem;
+    color: #666;
+}
+
+/* Animações (reutilizando a sua classe) */
+.animate-fade-in {
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .gallery-container {
+        margin-top: 20px;
+    }
+    .album-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .photo-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .photo-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Estilos para o Lightbox2 */
+.lb-data .lb-caption {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.lb-data .lb-number {
+    font-size: 0.9rem;
+}

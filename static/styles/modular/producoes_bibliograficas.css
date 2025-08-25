@@ -1,4 +1,4 @@
-/* Produções Bibliográficas CSS - Seguindo o design do LANGUE UFRPE */
+/* Produções Bibliográficas CSS - LANGUE UFRPE (Versão Corrigida e Responsiva) */
 
 /* Importar estilos base se necessário */
 @import url('base.css');
@@ -133,11 +133,13 @@
     font-size: 1.5rem;
     color: var(--primary-color);
     transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    flex-shrink: 0;
 }
 
 .ano-producoes-section.retraida .ano-producoes-content {
     max-height: 0;
     overflow: hidden;
+    padding: 0 25px;
 }
 
 .ano-producoes-section.expandida .ano-producoes-header {
@@ -150,14 +152,10 @@
 
 .ano-producoes-content {
     max-height: 5000px;
-    padding: 0 25px 25px 25px;
+    padding: 25px;
     background-color: var(--background-light);
     transition: max-height 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), 
                 padding 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.ano-producoes-section.retraida .ano-producoes-content {
-    padding: 0 25px;
 }
 
 .producoes-list {
@@ -173,14 +171,6 @@
     border-left: 4px solid var(--secondary-color);
     box-shadow: 0 2px 10px var(--shadow-light);
     transition: var(--transition-smooth);
-    opacity: 0;
-    transform: translateY(20px);
-}
-
-.producao-item.animate-fade-in {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .producao-item:hover {
@@ -213,13 +203,6 @@
     text-decoration: underline;
 }
 
-.autor-link::after {
-    content: '🔗';
-    margin-left: 3px;
-    font-size: 0.8rem;
-    opacity: 0.7;
-}
-
 .autor-nome {
     color: var(--text-dark);
 }
@@ -240,12 +223,6 @@
 .titulo-link:hover {
     color: var(--secondary-color);
     text-decoration: underline;
-}
-
-.titulo-link::after {
-    content: ' 🔗';
-    font-size: 0.8rem;
-    opacity: 0.7;
 }
 
 .titulo-texto {
@@ -304,45 +281,9 @@
     color: #2e7d32;
 }
 
-.tipo-anais {
+.tipo-trabalho {
     background: #fff3e0;
     color: #ef6c00;
-}
-
-.tipo-tese {
-    background: #fce4ec;
-    color: #c2185b;
-}
-
-.tipo-dissertacao {
-    background: #e0f2f1;
-    color: #00695c;
-}
-
-.tipo-outro {
-    background: #f5f5f5;
-    color: #424242;
-}
-
-.no-content-section {
-    text-align: center;
-    padding: 80px 20px;
-    background: var(--background-light);
-    border-radius: var(--border-radius);
-    margin: 40px 0;
-}
-
-.no-content-container h2 {
-    color: var(--primary-color);
-    font-size: 2rem;
-    margin-bottom: 20px;
-}
-
-.no-content-container p {
-    color: var(--text-light);
-    font-size: 1.1rem;
-    max-width: 600px;
-    margin: 0 auto;
 }
 
 /* === ESTILOS DE PUBLICAÇÕES PDF === */
@@ -350,66 +291,53 @@
     margin-top: 60px;
 }
 
-/* === FILTROS E BUSCA === */
 .filtros-container {
-    background: var(--background-white);
+    margin-bottom: 30px;
+    padding: 20px;
+    background: var(--background-light);
     border-radius: var(--border-radius);
-    box-shadow: 0 4px 20px var(--shadow-light);
-    margin-bottom: 40px;
-    overflow: hidden;
 }
 
 .filtros-wrapper {
-    padding: 30px;
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
 .busca-container {
-    position: relative;
-    max-width: 500px;
-    width: 100%;
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 25px;
+    padding: 5px;
+    box-shadow: 0 2px 10px var(--shadow-light);
 }
 
 .busca-input {
-    width: 100%;
-    padding: 15px 50px 15px 20px;
-    border: 2px solid var(--border-color);
-    border-radius: var(--border-radius-small);
-    font-size: 1rem;
-    font-family: 'Poppins', sans-serif;
-    background: #ffffff;
-    transition: var(--transition-smooth);
-}
-
-.busca-input:focus {
+    flex: 1;
+    border: none;
     outline: none;
-    border-color: var(--secondary-color);
-    box-shadow: 0 0 0 3px rgba(150, 17, 32, 0.1);
+    padding: 12px 20px;
+    font-size: 1rem;
+    border-radius: 20px;
 }
 
 .busca-btn {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
     background: var(--secondary-color);
     border: none;
-    border-radius: var(--border-radius-small);
+    border-radius: 50%;
     width: 40px;
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
     cursor: pointer;
     transition: var(--transition-smooth);
 }
 
 .busca-btn:hover {
     background: var(--primary-color);
-    transform: translateY(-50%) scale(1.05);
+    transform: scale(1.05);
 }
 
 .filtros-grupo {
@@ -419,16 +347,13 @@
 }
 
 .filtro-select {
-    padding: 12px 16px;
-    border: 2px solid var(--border-color);
-    border-radius: var(--border-radius-small);
-    font-size: 0.95rem;
-    font-family: 'Poppins', sans-serif;
-    background: #ffffff;
-    color: var(--text-dark);
+    padding: 10px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: white;
+    font-size: 0.9rem;
     cursor: pointer;
     transition: var(--transition-smooth);
-    min-width: 150px;
 }
 
 .filtro-select:focus {
@@ -437,548 +362,319 @@
     box-shadow: 0 0 0 3px rgba(150, 17, 32, 0.1);
 }
 
-/* === GRID DE PUBLICAÇÕES === */
 .publicacoes-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 30px;
-    margin-bottom: 50px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
 }
 
 .publicacao-card {
-    background: var(--background-white);
+    background: white;
     border-radius: var(--border-radius);
-    box-shadow: 0 4px 20px var(--shadow-light);
     overflow: hidden;
+    box-shadow: 0 4px 15px var(--shadow-light);
     transition: var(--transition-smooth);
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
 }
 
 .publicacao-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 30px var(--shadow-hover);
+    box-shadow: 0 8px 25px var(--shadow-medium);
 }
 
-/* === THUMBNAIL === */
-.publicacao-thumbnail {
-    position: relative;
-    width: 100%;
-    height: 280px;
-    overflow: hidden;
-    background: var(--background-light);
-}
-
-.thumbnail-link {
-    display: block;
-    width: 100%;
-    height: 100%;
-    position: relative;
-    text-decoration: none;
-}
-
-.thumbnail-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: var(--transition-smooth);
-}
-
-.thumbnail-link:hover .thumbnail-img {
-    transform: scale(1.05);
-}
-
-.thumbnail-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(114, 26, 26, 0.9);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    opacity: 0;
-    transition: var(--transition-smooth);
-    gap: 10px;
-}
-
-.thumbnail-link:hover .thumbnail-overlay {
-    opacity: 1;
-}
-
-.thumbnail-placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-light);
-    background: var(--background-light);
-    gap: 10px;
-}
-
-.thumbnail-placeholder span {
-    font-size: 1.2rem;
-    font-weight: 500;
-}
-
-/* === BADGES === */
-.categoria-badge {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: white;
-    z-index: 2;
-}
-
-.categoria-livro { background: #2563eb; }
-.categoria-revista { background: #dc2626; }
-.categoria-anais { background: #059669; }
-.categoria-relatorio { background: #d97706; }
-.categoria-manual { background: #7c3aed; }
-.categoria-guia { background: #0891b2; }
-.categoria-outros { background: #6b7280; }
-
-.destaque-badge {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: #fbbf24;
-    color: #92400e;
-    padding: 6px 10px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    z-index: 2;
-}
-
-/* === INFORMAÇÕES DA PUBLICAÇÃO === */
-.publicacao-info {
-    padding: 25px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.publicacao-titulo {
-    margin: 0 0 15px 0;
-    font-size: 1.3rem;
-    font-weight: 600;
-    line-height: 1.4;
-}
-
-.titulo-link {
-    color: var(--primary-color);
-    text-decoration: none;
-    transition: var(--transition-smooth);
-}
-
-.titulo-link:hover {
-    color: var(--secondary-color);
-}
-
-.subtitulo {
-    font-weight: 400;
-    color: var(--text-light);
-}
-
-.publicacao-organizadores {
-    margin-bottom: 15px;
-    font-size: 0.95rem;
-    line-height: 1.5;
-}
-
-.organizador-link {
-    color: var(--secondary-color);
-    text-decoration: none;
-    font-weight: 500;
-    transition: var(--transition-smooth);
-}
-
-.organizador-link:hover {
-    color: var(--primary-color);
-    text-decoration: underline;
-}
-
-.organizador-nome {
-    color: var(--text-dark);
-    font-weight: 500;
-}
-
-.publicacao-descricao {
-    color: var(--text-light);
-    font-size: 0.9rem;
-    line-height: 1.6;
-    margin-bottom: 20px;
-    flex-grow: 1;
-}
-
-/* === META INFORMAÇÕES === */
-.publicacao-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-top: auto;
-    padding-top: 15px;
-    border-top: 1px solid var(--border-color);
-}
-
-.meta-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: var(--text-light);
-    font-size: 0.85rem;
-}
-
-.meta-item svg {
-    flex-shrink: 0;
-}
-
-/* === PAGINAÇÃO === */
-.paginacao-container {
-    display: flex;
-    justify-content: center;
-    margin: 50px 0;
-}
-
-.paginacao {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: var(--background-white);
-    padding: 15px 25px;
-    border-radius: var(--border-radius);
-    box-shadow: 0 4px 20px var(--shadow-light);
-}
-
-.paginacao-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: var(--border-radius-small);
-    background: var(--background-light);
-    color: var(--text-dark);
-    text-decoration: none;
-    transition: var(--transition-smooth);
-}
-
-.paginacao-link:hover {
-    background: var(--secondary-color);
-    color: white;
-    transform: scale(1.05);
-}
-
-.paginacao-info {
-    padding: 0 20px;
-    color: var(--text-dark);
-    font-weight: 500;
-}
-
-/* === ESTATÍSTICAS === */
+/* Estatísticas */
 .estatisticas-section {
-    background: var(--background-white);
+    margin-top: 40px;
+    padding: 30px;
+    background: var(--background-light);
     border-radius: var(--border-radius);
-    box-shadow: 0 4px 20px var(--shadow-light);
-    margin-top: 50px;
 }
 
-.estatisticas-container {
-    padding: 40px;
-}
-
-.estatisticas-titulo {
+.estatisticas-title {
     text-align: center;
+    font-size: 1.5rem;
     color: var(--primary-color);
-    font-size: 2rem;
-    font-weight: 600;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
 }
 
 .estatisticas-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 30px;
+    gap: 20px;
 }
 
 .estatistica-item {
     text-align: center;
-    padding: 25px;
-    background: var(--background-light);
+    padding: 20px;
+    background: white;
     border-radius: var(--border-radius-small);
-    transition: var(--transition-smooth);
-}
-
-.estatistica-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 25px var(--shadow-medium);
+    box-shadow: 0 2px 10px var(--shadow-light);
 }
 
 .estatistica-numero {
-    font-size: 2.5rem;
+    display: block;
+    font-size: 2rem;
     font-weight: 700;
     color: var(--secondary-color);
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
 .estatistica-label {
-    color: var(--text-dark);
-    font-weight: 500;
-    font-size: 1rem;
-}
-
-/* === ESTADO SEM PUBLICAÇÕES === */
-.sem-publicacoes {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 60px 20px;
+    font-size: 0.9rem;
     color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.sem-publicacoes svg {
-    margin-bottom: 20px;
-    opacity: 0.5;
-}
-
-.sem-publicacoes h3 {
-    font-size: 1.5rem;
-    color: var(--text-dark);
-    margin-bottom: 10px;
-}
-
-.sem-publicacoes p {
-    font-size: 1rem;
-    max-width: 400px;
-    margin: 0 auto;
-}
-
-/* === ANIMAÇÕES === */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
+/* --- RESPONSIVIDADE TABLET (769px - 1024px) --- */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .conteudo-unificado-main {
+        padding: 30px 20px;
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
 
-.animate-fade-in {
-    animation: fadeIn 0.6s ease-out;
-}
-
-/* === RESPONSIVIDADE === */
-@media (max-width: 1024px) {
     .ano-producoes-header {
-        flex-direction: column;
-        align-items: flex-start;
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
         gap: 15px;
+        padding: 20px;
     }
-    
+
+    .ano-title {
+        order: 1;
+        width: 100%;
+        font-size: 1.8rem;
+    }
+
     .ano-stats {
-        align-self: flex-end;
+        order: 2;
+        justify-content: center;
     }
-    
-    .estatisticas-grid {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+
+    .expand-icon {
+        order: 3;
+        margin-top: 10px;
+        font-size: 1.3rem;
+    }
+
+    .ano-producoes-content {
+        padding: 20px;
+    }
+
+    .ano-producoes-section.retraida .ano-producoes-content {
+        padding: 0 20px;
+    }
+
+    .producao-item {
+        padding: 20px;
+    }
+
+    .publicacoes-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: 20px;
     }
+
+    .filtros-wrapper {
+        gap: 15px;
+    }
+
+    .filtros-grupo {
+        justify-content: center;
+    }
+
+    .estatisticas-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 15px;
+    }
 }
 
+/* --- RESPONSIVIDADE MOBILE (max-width: 768px) --- */
 @media (max-width: 768px) {
     .conteudo-unificado-main {
         padding: 20px 15px;
     }
-    
+
     .secao-titulo {
         font-size: 1.8rem;
+        margin-bottom: 30px;
         margin-top: 40px;
     }
 
-    .filtros-wrapper {
-        padding: 20px;
-    }
-    
-    .filtros-grupo {
-        flex-direction: column;
-    }
-    
-    .filtro-select {
-        width: 100%;
-    }
-    
-    .publicacoes-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    
-    .publicacao-thumbnail {
-        height: 250px;
-    }
-    
-    .publicacao-info {
-        padding: 20px;
-    }
-    
-    .publicacao-meta {
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .estatisticas-container {
-        padding: 25px;
-    }
-    
-    .estatisticas-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
-    
-    .estatistica-numero {
-        font-size: 2rem;
-    }
-    
-    .hero-title-container {
-        padding: 30px 15px;
+    .ano-producoes-section {
+        margin-bottom: 15px;
+        border-radius: 8px;
     }
 
-    .producoes-bibliograficas-main {
+    .ano-producoes-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
         padding: 20px 15px;
     }
-    
-    .ano-producoes-header {
-        padding: 20px;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
+
+    .ano-title {
+        font-size: 1.5rem;
+        order: 1;
     }
-    
+
     .ano-stats {
-        align-self: stretch;
-        justify-content: space-between;
+        order: 2;
+        justify-content: center;
     }
-    
+
+    .total-producoes {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+
+    .expand-icon {
+        order: 3;
+        font-size: 1.2rem;
+        margin-top: 10px;
+    }
+
     .ano-producoes-content {
-        padding: 0 20px 20px 20px;
+        padding: 15px;
     }
-    
+
+    .ano-producoes-section.retraida .ano-producoes-content {
+        padding: 0 15px;
+    }
+
+    .producoes-list {
+        gap: 15px;
+    }
+
     .producao-item {
-        padding: 20px;
+        padding: 15px;
+        margin-bottom: 10px;
     }
-    
+
     .producao-autores {
         font-size: 0.9rem;
     }
-    
+
     .producao-titulo {
         font-size: 1rem;
     }
-    
+
     .producao-detalhes {
         font-size: 0.9rem;
     }
+
+    .tipo-badge {
+        padding: 4px 8px;
+        font-size: 0.7rem;
+    }
+
+    /* Filtros em mobile */
+    .filtros-container {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .filtros-wrapper {
+        gap: 15px;
+    }
+
+    .busca-container {
+        padding: 3px;
+    }
+
+    .busca-input {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+
+    .busca-btn {
+        width: 35px;
+        height: 35px;
+    }
+
+    .filtros-grupo {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .filtro-select {
+        width: 100%;
+        padding: 12px 15px;
+        font-size: 0.9rem;
+    }
+
+    /* Grid de publicações em mobile */
+    .publicacoes-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    /* Estatísticas em mobile */
+    .estatisticas-section {
+        padding: 20px 15px;
+        margin-top: 30px;
+    }
+
+    .estatisticas-title {
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+    }
+
+    .estatisticas-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+    }
+
+    .estatistica-item {
+        padding: 15px;
+    }
+
+    .estatistica-numero {
+        font-size: 1.5rem;
+    }
+
+    .estatistica-label {
+        font-size: 0.8rem;
+    }
 }
 
+/* --- RESPONSIVIDADE MOBILE PEQUENO (max-width: 480px) --- */
 @media (max-width: 480px) {
-    .busca-container {
-        max-width: 100%;
+    .conteudo-unificado-main {
+        padding: 15px 10px;
     }
-    
-    .publicacao-thumbnail {
-        height: 200px;
+
+    .ano-producoes-header {
+        padding: 15px 10px;
     }
-    
-    .publicacao-titulo {
-        font-size: 1.1rem;
+
+    .ano-title {
+        font-size: 1.3rem;
     }
-    
+
+    .ano-producoes-content {
+        padding: 12px 10px;
+    }
+
+    .ano-producoes-section.retraida .ano-producoes-content {
+        padding: 0 10px;
+    }
+
+    .producao-item {
+        padding: 12px;
+    }
+
+    .filtros-container {
+        padding: 12px 10px;
+    }
+
     .estatisticas-grid {
         grid-template-columns: 1fr;
+        gap: 10px;
     }
-    
-    .categoria-badge,
-    .destaque-badge {
-        font-size: 0.7rem;
-        padding: 4px 8px;
-    }
-}
 
-/* === ACESSIBILIDADE === */
-@media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
-}
-
-/* Estados de foco para acessibilidade */
-.autor-link:focus,
-.titulo-link:focus,
-.ano-producoes-header:focus,
-.busca-btn:focus,
-.filtro-select:focus,
-.organizador-link:focus,
-.thumbnail-link:focus,
-.paginacao-link:focus {
-    outline: 2px solid var(--secondary-color);
-    outline-offset: 2px;
-}
-
-/* Melhor contraste para leitores de tela */
-@media (prefers-contrast: high) {
-    :root {
-        --shadow-light: rgba(0, 0, 0, 0.3);
-        --shadow-medium: rgba(0, 0, 0, 0.4);
-        --shadow-hover: rgba(0, 0, 0, 0.5);
-    }
-}
-
-/* Impressão */
-@media print {
-    .ano-producoes-section,
-    .publicacao-card {
-        break-inside: avoid;
-        box-shadow: none;
-        border: 1px solid var(--border-color);
-    }
-    
-    .autor-link::after,
-    .titulo-link::after {
-        content: ' (' attr(href) ')';
-    }
-    
-    .expand-icon {
-        display: none;
-    }
-    
-    .ano-producoes-content {
-        max-height: none !important;
-        overflow: visible !important;
-    }
-    
-    .filtros-container,
-    .paginacao-container,
-    .estatisticas-section {
-        display: none;
+    .estatistica-item {
+        padding: 12px;
     }
 }
 

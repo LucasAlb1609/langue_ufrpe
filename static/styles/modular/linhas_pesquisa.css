@@ -1,6 +1,6 @@
-/* Linhas de Pesquisa CSS - LANGUE UFRPE (Versão Corrigida) */
+/* Linhas de Pesquisa CSS - LANGUE UFRPE (Versão Corrigida e Responsiva) */
 
-/* Variáveis e estilos base (mantidos) */
+/* Variáveis e estilos base */
 :root {
     --primary-color: #721a1a;
     --secondary-color: #961120;
@@ -39,14 +39,15 @@
 .linha-pesquisa-header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 20px;
     padding: 25px;
     cursor: pointer;
-    background-color: #ffffff; /* Fundo próprio para não ser transparente */
+    background-color: #ffffff;
     position: relative;
-    z-index: 2; /* Garante que fique sobre o conteúdo ao animar */
-    border-bottom: 1px solid transparent; /* Evita "pulo" na transição */
-    transition: border-color 0.5s ease;
+    z-index: 2;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s ease;
 }
 
 /* Título, imagem e ícone no cabeçalho */
@@ -65,6 +66,7 @@
     border-radius: 50%;
     overflow: hidden;
     border: 3px solid var(--secondary-color);
+    flex-shrink: 0;
 }
 
 .linha-pesquisa-image img {
@@ -77,16 +79,18 @@
     font-size: 1.5rem;
     color: var(--primary-color);
     transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    flex-shrink: 0;
 }
 
 /* Comportamento de expandir/recolher */
 .linha-pesquisa-section.retraida .linha-pesquisa-content {
     max-height: 0;
     overflow: hidden;
+    padding: 0 25px;
 }
 
 .linha-pesquisa-section.expandida .linha-pesquisa-header {
-    border-color: var(--border-color); /* Adiciona uma linha ao expandir */
+    border-color: var(--border-color);
 }
 
 .linha-pesquisa-section.expandida .expand-icon {
@@ -95,17 +99,14 @@
 
 /* Conteúdo expansível - LÓGICA PRINCIPAL DA ANIMAÇÃO */
 .linha-pesquisa-content {
-    max-height: 3000px; /* Altura máxima grande o suficiente para o conteúdo */
+    max-height: 3000px;
     padding: 25px;
     background-color: var(--background-light);
-    
-    /* A transição controla a animação de "deslizar" */
-    transition: max-height 0.7s cubic-bezier(0.25, 0.8, 0.25, 1);
-    
-    will-change: max-height; /* Otimização de performance */
+    transition: max-height 0.7s cubic-bezier(0.25, 0.8, 0.25, 1), padding 0.7s ease;
+    will-change: max-height;
 }
 
-/* Estilos dos detalhes (mantidos) */
+/* Estilos dos detalhes */
 .linha-pesquisa-details {
     display: flex;
     flex-direction: column;
@@ -174,6 +175,44 @@
     background: var(--background-white);
 }
 
+.relacionado-link {
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.relacionado-link:hover {
+    text-decoration: underline;
+}
+
+.relacionado-nome {
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.relacionado-universidade {
+    color: var(--text-light);
+    font-size: 0.9em;
+}
+
+.coordenador-badge {
+    color: var(--secondary-color);
+    font-weight: 600;
+    font-size: 0.9em;
+}
+
+/* Estudantes por nível */
+.estudantes-nivel {
+    margin-bottom: 20px;
+}
+
+.nivel-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
 /* Estado de foco para acessibilidade */
 .linha-pesquisa-header:focus-visible {
     outline: 2px solid var(--primary-color);
@@ -181,17 +220,170 @@
     border-radius: var(--border-radius);
 }
 
-/* Media queries para responsividade (integradas de mobile.css e tablet.css) */
+/* --- RESPONSIVIDADE TABLET (769px - 1024px) --- */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .linhas-pesquisa-main {
+        padding: 30px 20px;
+    }
+
+    .linha-pesquisa-header {
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
+        gap: 15px;
+        padding: 20px;
+    }
+
+    .linha-pesquisa-title {
+        font-size: 1.5rem;
+        order: 2;
+        width: 100%;
+    }
+
+    .linha-pesquisa-image {
+        width: 100px;
+        height: 100px;
+        min-width: 100px;
+        order: 1;
+        margin: 0 auto;
+    }
+
+    .expand-icon {
+        order: 3;
+        font-size: 1.3rem;
+        margin-top: 10px;
+    }
+
+    .linha-pesquisa-content {
+        padding: 20px;
+    }
+
+    .relacionados-list {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 12px;
+    }
+}
+
+/* --- RESPONSIVIDADE MOBILE (max-width: 768px) --- */
 @media (max-width: 768px) {
+    .linhas-pesquisa-main {
+        padding: 20px 15px;
+    }
+
+    .linha-pesquisa-section {
+        margin-bottom: 15px;
+        border-radius: 8px;
+    }
+
     .linha-pesquisa-header {
         flex-direction: column;
         text-align: center;
+        gap: 15px;
+        padding: 20px 15px;
     }
+
+    .linha-pesquisa-title {
+        font-size: 1.3rem;
+        order: 2;
+    }
+
     .linha-pesquisa-image {
-        margin-top: 15px;
-        order: -1; /* Move a imagem para cima do título */
+        width: 80px;
+        height: 80px;
+        min-width: 80px;
+        order: 1;
+        margin: 0 auto;
     }
+
     .expand-icon {
-        margin-top: 15px;
+        order: 3;
+        font-size: 1.2rem;
+        margin-top: 10px;
+    }
+
+    .linha-pesquisa-content {
+        padding: 15px;
+    }
+
+    .linha-pesquisa-section.retraida .linha-pesquisa-content {
+        padding: 0 15px;
+    }
+
+    .detail-item {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+
+    .detail-title {
+        font-size: 1rem;
+    }
+
+    .detail-content {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+    .palavras-chave {
+        gap: 6px;
+    }
+
+    .palavra-chave {
+        padding: 4px 8px;
+        font-size: 0.8rem;
+    }
+
+    .relacionados-list {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .relacionado-item {
+        padding: 12px;
+    }
+
+    .relacionados-title {
+        font-size: 1.1rem;
+    }
+
+    .nivel-title {
+        font-size: 1rem;
     }
 }
+
+/* --- RESPONSIVIDADE MOBILE PEQUENO (max-width: 480px) --- */
+@media (max-width: 480px) {
+    .linhas-pesquisa-main {
+        padding: 15px 10px;
+    }
+
+    .linha-pesquisa-header {
+        padding: 15px 10px;
+    }
+
+    .linha-pesquisa-title {
+        font-size: 1.2rem;
+    }
+
+    .linha-pesquisa-image {
+        width: 70px;
+        height: 70px;
+        min-width: 70px;
+    }
+
+    .linha-pesquisa-content {
+        padding: 12px 10px;
+    }
+
+    .linha-pesquisa-section.retraida .linha-pesquisa-content {
+        padding: 0 10px;
+    }
+
+    .detail-item {
+        padding: 12px;
+    }
+
+    .relacionado-item {
+        padding: 10px;
+    }
+}
+

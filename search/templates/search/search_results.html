@@ -1,0 +1,243 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {% if query %}
+        Resultados para "{{ query }}" - LANGUE UFRPE
+    {% else %}
+        Busca - LANGUE UFRPE
+    {% endif %}
+{% endblock %}
+
+{% block page_styles %}
+    <link rel="stylesheet" href="{% static 'styles/modular/search.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/modular/animations.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/modular/tablet.css' %}" media="screen and (min-width: 769px) and (max-width: 1024px)">
+    <link rel="stylesheet" href="{% static 'styles/modular/mobile.css' %}" media="screen and (max-width: 768px)">
+{% endblock %}
+
+{% block content %}
+    <div class="search-results-container">
+        <div class="search-header">
+            <h1 class="search-title">
+                {% if query %}
+                    Resultados da Busca
+                {% else %}
+                    Busca no Site
+                {% endif %}
+            </h1>
+            
+            {% if query %}
+                <div class="search-query-info">
+                    <p class="search-query">Você pesquisou por: <strong>"{{ query }}"</strong></p>
+                    <p class="search-count">
+                        {% if has_results %}
+                            {{ results.total_results }} resultado{{ results.total_results|pluralize:"s" }} encontrado{{ results.total_results|pluralize:"s" }}
+                        {% else %}
+                            Nenhum resultado encontrado
+                        {% endif %}
+                    </p>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Nova busca -->
+        <div class="new-search-container">
+            <form method="GET" action="{% url 'search:search_results' %}" class="search-form">
+                <div class="search-input-container">
+                    <input 
+                        type="text" 
+                        name="q" 
+                        value="{{ query }}" 
+                        placeholder="Digite sua busca..." 
+                        class="search-input-field"
+                        required
+                    >
+                    <button type="submit" class="search-submit-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 21L16.514 16.506L21 21ZM19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Buscar
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        {% if query %}
+            {% if has_results %}
+                <!-- Resultados de Linhas de Pesquisa -->
+                {% if results.linhas_pesquisa %}
+                    <section class="results-section">
+                        <h2 class="section-title">Linhas de Pesquisa ({{ results.linhas_pesquisa|length }})</h2>
+                        <div class="results-grid">
+                            {% for linha in results.linhas_pesquisa %}
+                                <article class="result-card linha-pesquisa-card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">
+                                            <a href="{% url 'linhas_pesquisa:linhas_pesquisa' %}#linha-{{ linha.id }}">
+                                                {{ linha.titulo }}
+                                            </a>
+                                        </h3>
+                                        <span class="card-type">Linha de Pesquisa</span>
+                                    </div>
+                                    <div class="card-content">
+                                        <p class="card-description">{{ linha.objetivo|truncatewords:30 }}</p>
+                                        {% if linha.get_palavras_chave_list %}
+                                            <div class="card-tags">
+                                                {% for palavra in linha.get_palavras_chave_list|slice:":5" %}
+                                                    <span class="tag">{{ palavra }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </article>
+                            {% endfor %}
+                        </div>
+                    </section>
+                {% endif %}
+
+                <!-- Resultados de Produções Bibliográficas -->
+                {% if results.producoes_bibliograficas %}
+                    <section class="results-section">
+                        <h2 class="section-title">Produções Bibliográficas ({{ results.producoes_bibliograficas|length }})</h2>
+                        <div class="results-grid">
+                            {% for producao in results.producoes_bibliograficas %}
+                                <article class="result-card producao-card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">
+                                            {% if producao.link_producao %}
+                                                <a href="{{ producao.link_producao }}" target="_blank" rel="noopener noreferrer">
+                                                    {{ producao.titulo }}
+                                                </a>
+                                            {% else %}
+                                                {{ producao.titulo }}
+                                            {% endif %}
+                                        </h3>
+                                        <span class="card-type">{{ producao.get_tipo_display }}</span>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="card-authors">
+                                            {% for autor in producao.autores.all|slice:":3" %}
+                                                {{ autor.nome }}{% if not forloop.last %}, {% endif %}
+                                            {% endfor %}
+                                            {% if producao.autores.count > 3 %}
+                                                e outros
+                                            {% endif %}
+                                        </div>
+                                        <div class="card-details">
+                                            {% if producao.local_publicacao %}
+                                                <span class="publication-venue">{{ producao.local_publicacao }}</span>
+                                            {% endif %}
+                                            <span class="publication-year">{{ producao.ano_publicacao }}</span>
+                                        </div>
+                                    </div>
+                                </article>
+                            {% endfor %}
+                        </div>
+                    </section>
+                {% endif %}
+
+                <!-- Resultados de Publicações PDF -->
+                {% if results.publicacoes_pdf %}
+                    <section class="results-section">
+                        <h2 class="section-title">Publicações PDF ({{ results.publicacoes_pdf|length }})</h2>
+                        <div class="results-grid">
+                            {% for publicacao in results.publicacoes_pdf %}
+                                <article class="result-card publicacao-card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">
+                                            <a href="{{ publicacao.arquivo_pdf.url }}" target="_blank" rel="noopener noreferrer">
+                                                {{ publicacao.titulo }}
+                                            </a>
+                                        </h3>
+                                        <span class="card-type">{{ publicacao.get_categoria_display }}</span>
+                                    </div>
+                                    <div class="card-content">
+                                        {% if publicacao.organizadores.all %}
+                                            <div class="card-authors">
+                                                Org.: 
+                                                {% for organizador in publicacao.organizadores.all|slice:":3" %}
+                                                    {{ organizador.nome }}{% if not forloop.last %}, {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                        <div class="card-details">
+                                            <span class="publication-year">{{ publicacao.ano_publicacao }}</span>
+                                            {% if publicacao.downloads %}
+                                                <span class="download-count">{{ publicacao.downloads }} downloads</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </article>
+                            {% endfor %}
+                        </div>
+                    </section>
+                {% endif %}
+            {% else %}
+                <!-- Nenhum resultado encontrado -->
+                <section class="no-results-section">
+                    <div class="no-results-container">
+                        <div class="no-results-icon">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 21L16.514 16.506L21 21ZM19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h2 class="no-results-title">Nenhum resultado encontrado</h2>
+                        <p class="no-results-message">
+                            Não encontramos nenhum resultado para "<strong>{{ query }}</strong>".
+                        </p>
+                        <div class="search-suggestions">
+                            <h3>Sugestões:</h3>
+                            <ul>
+                                <li>Verifique a ortografia das palavras</li>
+                                <li>Tente usar termos mais gerais</li>
+                                <li>Use palavras-chave diferentes</li>
+                                <li>Navegue pelas seções do site:</li>
+                            </ul>
+                            <div class="quick-links">
+                                <a href="{% url 'home' %}" class="quick-link">Página Inicial</a>
+                                <a href="{% url 'linhas_pesquisa:linhas_pesquisa' %}" class="quick-link">Linhas de Pesquisa</a>
+                                <a href="{% url 'producoes_bibliograficas:producoes_e_publicacoes' %}" class="quick-link">Produções e Publicações</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            {% endif %}
+        {% else %}
+            <!-- Página inicial de busca -->
+            <section class="search-intro-section">
+                <div class="search-intro-container">
+                    <h2>Busque em todo o conteúdo do LANGUE UFRPE</h2>
+                    <p>Use a barra de busca acima para encontrar informações sobre:</p>
+                    <div class="search-categories">
+                        <div class="category-item">
+                            <h3>Linhas de Pesquisa</h3>
+                            <p>Objetivos, palavras-chave e setores de aplicação</p>
+                        </div>
+                        <div class="category-item">
+                            <h3>Produções Bibliográficas</h3>
+                            <p>Artigos, livros, capítulos e trabalhos acadêmicos</p>
+                        </div>
+                        <div class="category-item">
+                            <h3>Publicações PDF</h3>
+                            <p>Livros, revistas, anais e relatórios disponíveis</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block page_scripts %}
+    <script>
+        // Foca no campo de busca ao carregar a página
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.querySelector('.search-input-field');
+            if (searchInput && !searchInput.value) {
+                searchInput.focus();
+            }
+        });
+    </script>
+{% endblock %}
+

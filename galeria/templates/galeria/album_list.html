@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Galeria de Fotos - {{ block.super }}{% endblock %}
+
+{% block page_styles %}
+    <link rel="stylesheet" href="{% static 'styles/modular/galeria.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="gallery-container">
+    <header class="gallery-header animate-fade-in">
+        <h1>Galeria de Fotos</h1>
+        <p>Explore os registros dos nossos eventos, congressos e momentos importantes.</p>
+    </header>
+
+    <section class="album-grid">
+        {% for album in albums %}
+        <a href="{% url 'galeria:album_detail' pk=album.pk %}" class="album-card-link">
+            <article class="album-card animate-fade-in" style="animation-delay: {% widthratio forloop.counter0 1 100 %}ms;">
+                <div class="album-card-image-wrapper">
+                    <img src="{{ album.cover_image.url }}" alt="Capa do álbum {{ album.title }}" class="album-card-image">
+                </div>
+                <div class="album-card-content">
+                    <h3 class="album-card-title">{{ album.title }}</h3>
+                    <div class="album-card-meta">
+                        <span class="album-card-date">{{ album.event_date|date:"d M Y" }}</span>
+                        <span class="album-card-count">{{ album.photo_count }} Fotos</span>
+                    </div>
+                </div>
+            </article>
+        </a>
+        {% empty %}
+        <p class="no-albums-message">Nenhum álbum de fotos foi publicado ainda.</p>
+        {% endfor %}
+    </section>
+</div>
+{% endblock %}
