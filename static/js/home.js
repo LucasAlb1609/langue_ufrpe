@@ -11,17 +11,23 @@ document.addEventListener('DOMContentLoaded', function () {
         if (menuLangueLink && aboutSection) {
             menuLangueLink.addEventListener('click', function (e) {
                 e.preventDefault();
-            
+
                 const isExpanded = aboutSection.classList.contains('show');
-            
+
                 if (!isExpanded) {
                     aboutSection.classList.add('show');
-                    // Define max-height para a altura real do conteúdo para animar a abertura
                     aboutSection.style.maxHeight = aboutSection.scrollHeight + 'px';
+                    aboutSection.style.opacity = '1';
+                    aboutSection.style.transition = 'max-height 0.7s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease';
+                    // Rola suavemente até a seção revelada
+                    setTimeout(() => {
+                        aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 100); // Aguarda início da animação
                 } else {
                     aboutSection.classList.remove('show');
-                    // Define max-height para 0 para animar o fechamento
                     aboutSection.style.maxHeight = '0';
+                    aboutSection.style.opacity = '0';
+                    aboutSection.style.transition = 'max-height 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease';
                 }
             });
         }
