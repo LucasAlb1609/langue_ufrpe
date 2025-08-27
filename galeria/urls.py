@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import album_list_view, album_detail_view
+from . import views
 
 app_name = 'galeria'
 
@@ -11,4 +12,7 @@ urlpatterns = [
     # URL para ver as fotos de um álbum específico
     # Ex: /galeria/1/
     path('<int:pk>/', album_detail_view, name='album_detail'),
+
+    #URL para o card da homepage
+    path("<int:album_id>/", views.detalhe_album, name="detalhe"),
 ]

@@ -26,4 +26,3 @@ urlpatterns = [
     # API REST endpoints
     path('api/', include(router.urls)),
 ]
-

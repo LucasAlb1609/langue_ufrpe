@@ -74,29 +74,27 @@
     <main role="main">
 
         <section class="featured-publications" id="publicacoes-destaque">
-            <h2>Featured Publications</h2>
+            <h2>Nossas Publicações Recentes</h2>
             <div class="cards-container">
                 <article class="card">
-                    <h3>Latest Research</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pulvinar, lectus eu commodo pulvinar, lectus eu commodo pulvinar, lectus eu commodo pulvinar.</p>
-                    <a href="#latest-research" aria-label="Ver mais sobre Latest Research">
-                        <img src="https://via.placeholder.com/30x30/721a1a/ffffff?text=🔍" alt="" width="30" height="30">
+                    <h3>{{ latest_producao.titulo }}</h3>
+                    <p>{{ latest_producao.resumo|default:"Sem resumo disponível." }}</p>
+                    <a href="{% url 'producoes_bibliograficas:producao_detail' latest_producao.id %}" aria-label="Ver mais sobre {{ latest_producao.titulo }}">
+                        <img src="{% if latest_producao.thumbnail %}{{ latest_producao.thumbnail.url }}{% else %}https://via.placeholder.com/30x30/721a1a/ffffff?text=🔍{% endif %}" alt="" width="30" height="30">
                     </a>
                 </article>
-                
                 <article class="card">
-                    <h3>Featured Publications</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pulvinar, lectus eu commodo pulvinar, lectus eu commodo pulvinar, lectus eu commodo pulvinar.</p>
-                    <a href="#featured-publications" aria-label="Ver mais sobre Featured Publications">
-                        <img src="https://via.placeholder.com/30x30/721a1a/ffffff?text=📄" alt="" width="30" height="30">
+                    <h3>{{ latest_publicacao.titulo }}</h3>
+                    <p>{{ latest_publicacao.resumo|default:"Sem resumo disponível." }}</p>
+                    <a href="{% url 'publicacoes:detalhes' latest_publicacao.id %}" aria-label="Ver mais sobre {{ latest_publicacao.titulo }}">
+                        <img src="{% if latest_publicacao.thumbnail %}{{ latest_publicacao.thumbnail.url }}{% else %}https://via.placeholder.com/30x30/721a1a/ffffff?text=📄{% endif %}" alt="" width="30" height="30">
                     </a>
                 </article>
-                
                 <article class="card">
-                    <h3>Upcoming Events</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pulvinar, lectus eu commodo pulvinar, lectus eu commodo pulvinar, lectus eu commodo pulvinar.</p>
-                    <a href="#upcoming-events" aria-label="Ver mais sobre Upcoming Events">
-                        <img src="https://via.placeholder.com/30x30/721a1a/ffffff?text=📅" alt="" width="30" height="30">
+                    <h3>{{ latest_galeria.titulo }}</h3>
+                    <p>{{ latest_galeria.descricao|default:"Sem descrição disponível." }}</p>
+                    <a href="{% url 'galeria:detalhe' latest_galeria.id %}" aria-label="Ver mais sobre {{ latest_galeria.titulo }}">
+                        <img src="{% if latest_galeria.imagem %}{{ latest_galeria.imagem.url }}{% else %}https://via.placeholder.com/30x30/721a1a/ffffff?text=📅{% endif %}" alt="" width="30" height="30">
                     </a>
                 </article>
             </div>

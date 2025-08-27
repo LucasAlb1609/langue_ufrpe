@@ -1,0 +1,6 @@
+<h1>Detalhes do Álbum</h1>
+<p>Título: {{ album.titulo }}</p>
+<p>Descrição: {{ album.descricao }}</p>
+{% if album.imagem %}
+    <img src="{{ album.imagem.url }}" alt="{{ album.titulo }}">
+{% endif %}

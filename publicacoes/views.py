@@ -310,6 +310,11 @@ def buscar_publicacoes_ajax(request):
     
     return JsonResponse({'results': results})
 
+def detalhes_publicacao(request, publicacao_id):
+    publicacao = get_object_or_404(PublicacaoPDF, pk=publicacao_id)
+    return render(request, (
+        'publicacoes/detalhes_publicacao.html'
+    ), {'publicacao': publicacao})
 
 # === API REST (usando Django REST Framework) ===
 
