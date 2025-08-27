@@ -58,6 +58,9 @@ class ProducaoBibliografica(models.Model):
     def get_autores_display(self):
         """Retorna a string formatada dos autores"""
         return "; ".join([a.nome for a in self.autores.all()])
+    
+    def get_absolute_url(self):
+        return reverse('producoes_bibliograficas:producao_detail', args=[str(self.id)])
 
 
 class ConfiguracaoPaginaProducoes(models.Model):

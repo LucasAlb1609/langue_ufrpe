@@ -14,7 +14,7 @@ urlpatterns = [
     # URLs principais da aplicação
     path('', producoes_e_publicacoes_view, name='producoes_e_publicacoes'),
     path('lista/', views.ProducoesBibliograficasListView.as_view(), name='lista'),
-    path('producao/<int:pk>/', views.producao_detail_view, name='producao_detail'),
+    path('producao/<int:id>/', views.producao_detail_view, name='producao_detail'),
     
     # URLs AJAX
     path('ajax/autores/', views.autores_ajax_view, name='autores_ajax'),

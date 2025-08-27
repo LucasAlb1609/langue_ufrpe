@@ -76,27 +76,31 @@
         <section class="featured-publications" id="publicacoes-destaque">
             <h2>Nossas Publicações Recentes</h2>
             <div class="cards-container">
-                <article class="card">
-                    <h3>{{ latest_producao.titulo }}</h3>
-                    <p>{{ latest_producao.resumo|default:"Sem resumo disponível." }}</p>
-                    <a href="{% url 'producoes_bibliograficas:producao_detail' latest_producao.id %}" aria-label="Ver mais sobre {{ latest_producao.titulo }}">
-                        <img src="{% if latest_producao.thumbnail %}{{ latest_producao.thumbnail.url }}{% else %}https://via.placeholder.com/30x30/721a1a/ffffff?text=🔍{% endif %}" alt="" width="30" height="30">
-                    </a>
-                </article>
-                <article class="card">
-                    <h3>{{ latest_publicacao.titulo }}</h3>
-                    <p>{{ latest_publicacao.resumo|default:"Sem resumo disponível." }}</p>
-                    <a href="{% url 'publicacoes:detalhes' latest_publicacao.id %}" aria-label="Ver mais sobre {{ latest_publicacao.titulo }}">
-                        <img src="{% if latest_publicacao.thumbnail %}{{ latest_publicacao.thumbnail.url }}{% else %}https://via.placeholder.com/30x30/721a1a/ffffff?text=📄{% endif %}" alt="" width="30" height="30">
-                    </a>
-                </article>
-                <article class="card">
-                    <h3>{{ latest_galeria.titulo }}</h3>
-                    <p>{{ latest_galeria.descricao|default:"Sem descrição disponível." }}</p>
-                    <a href="{% url 'galeria:detalhe' latest_galeria.id %}" aria-label="Ver mais sobre {{ latest_galeria.titulo }}">
-                        <img src="{% if latest_galeria.imagem %}{{ latest_galeria.imagem.url }}{% else %}https://via.placeholder.com/30x30/721a1a/ffffff?text=📅{% endif %}" alt="" width="30" height="30">
-                    </a>
-                </article>
+                <a href="{% if latest_producao.link_producao %}{{ latest_producao.link_producao }}{% else %}#{% endif %}" target="_blank" aria-label="Abrir produção: {{ latest_producao.titulo }}" class="card-link">
+                    <article class="card">
+                        <h3>{{ latest_producao.titulo }}</h3>
+                        <p>
+                            <strong>Autores:</strong>
+                            {% for autor in latest_producao.autores.all %}
+                                {{ autor.nome }}{% if not forloop.last %}, {% endif %}
+                            {% empty %}
+                                Nenhum autor cadastrado.
+                            {% endfor %}
+                        </p>
+                        </article>
+                </a>
+                <a href="{% if latest_publicacao.arquivo_pdf %}{{ latest_publicacao.arquivo_pdf.url }}{% else %}#{% endif %}" target="_blank" aria-label="Abrir PDF: {{ latest_publicacao.titulo }}" class="card-link">
+                    <article class="card">
+                        <h3>{{ latest_publicacao.titulo }}</h3>
+                        <p>{{ latest_publicacao.descricao|default:"Sem resumo disponível." }}</p>
+                        </article>
+                </a>
+                <a href="{% url 'galeria:detalhe' latest_galeria.id %}" aria-label="Ver mais sobre {{ latest_galeria.title }}" class="card-link">
+                    <article class="card">
+                        <h3>{{ latest_galeria.title }}</h3>
+                        <p>{{ latest_galeria.description|default:"Sem descrição disponível." }}</p>
+                        </article>
+                </a>
             </div>
         </section>
 
@@ -161,7 +165,7 @@
     <!-- Rodapé -->
     <footer role="contentinfo">
         <div class="footer-content">
-            <p>Copyright &copy; 2025 University. All rights reserved.</p>
+            <p>Copyright &copy; 2025 LANGUE UFRPE. Todos os direitos reservados.</p>
             <div class="social-media" role="list" aria-label="Redes sociais">
                 <a href="#facebook" aria-label="Facebook" role="listitem">
                     <img src="{% static 'images/icons/facebook.svg' %}" alt="Facebook" width="24" height="24" style="filter: brightness(0) invert(1);">
@@ -169,8 +173,8 @@
                 <a href="#instagram" aria-label="Instagram" role="listitem">
                     <img src="{% static 'images/icons/instagram.svg' %}" alt="Instagram" width="24" height="24" style="filter: brightness(0) invert(1);">
                 </a>
-                <a href="#linkedin" aria-label="LinkedIn" role="listitem">
-                    <img src="{% static 'images/icons/linkedin.svg' %}" alt="LinkedIn" width="24" height="24" style="filter: brightness(0) invert(1);">
+                <a href="http://127.0.0.1:8000/admin/" aria-label="Admin" role="listitem">
+                    <img src="{% static 'images/icons/admin.svg' %}" alt="LinkedIn" width="24" height="24" style="filter: brightness(0) invert(1);">
                 </a>
             </div>
         </div>

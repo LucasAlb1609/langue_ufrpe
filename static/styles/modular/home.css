@@ -378,6 +378,11 @@ main {
     align-items: stretch; /* Padrão do flex, mas explícito é melhor */
 }
 
+/* Cards sempre com altura igual ao maior card */
+.cards-container {
+    align-items: stretch; /* Já presente, garante altura igual no flex */
+}
+
 .card {
     background-color: #fff7f5;
     border: 1px solid #ddd;
@@ -393,6 +398,10 @@ main {
     transition: transform 0.2s, box-shadow 0.2s;
     flex-grow: 1; /* Permite que os cards cresçam uniformemente */
     box-sizing: border-box; /* Garante que padding não afete a largura calculada */
+    height: 100%; /* Faz o card ocupar toda a altura disponível do container flex */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .card:hover {
@@ -412,6 +421,13 @@ main {
     line-height: 1.6;
     flex-grow: 1;
     margin-bottom: 15px;
+    /* Limita a altura do texto do card e oculta excesso */
+    max-height: 3.6em; /* Aproximadamente 2 linhas */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limita a 2 linhas */
+    -webkit-box-orient: vertical;
 }
 
 .card a {
@@ -437,6 +453,20 @@ main {
 
 .card a:hover img {
     transform: scale(1.1);
+}
+
+.card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+.card-link .card {
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+}
+.card-link:hover .card,
+.card-link:focus .card {
+    box-shadow: 0 4px 16px rgba(150,17,32,0.12);
 }
 
 /* Estilos para a Seção de Localização */

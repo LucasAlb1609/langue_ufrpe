@@ -29,7 +29,7 @@ urlpatterns = [
     path('', views.home, name='home'),
 
     # Mecanismo de busca
-    path('busca/', include('search.urls')),
+    path('search/', include('search.urls')),
     
     # Linhas de pesquisa
     path('linhas-de-pesquisa/', include('linhas_pesquisa.urls')),

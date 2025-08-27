@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.urls import reverse
 
 class Album(models.Model):
     """
@@ -24,6 +25,9 @@ class Album(models.Model):
         Retorna a contagem de fotos neste álbum.
         """
         return self.photos.count()
+
+    def get_absolute_url(self):
+        return reverse('galeria:detalhe', args=[str(self.id)])
 
 class Foto(models.Model):
     """
