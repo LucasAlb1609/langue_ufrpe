@@ -64,15 +64,19 @@
                 </a>                <a href="#instagram" aria-label="Instagram" role="listitem">
                     <img src="{% static 'images/icons/instagram.svg' %}" alt="Instagram" width="24" height="24" style="filter: brightness(0) invert(1);">
                 </a>
-                <a href="#linkedin" aria-label="LinkedIn" role="listitem">
-                    <img src="{% static 'images/icons/linkedin.svg' %}" alt="LinkedIn" width="24" height="24" style="filter: brightness(0) invert(1);">
+                <a href="http://127.0.0.1:8000/admin/" aria-label="Admin" role="listitem">
+                    <img src="{% static 'images/icons/admin.svg' %}" alt="LinkedIn" width="24" height="24" style="filter: brightness(0) invert(1);">
                 </a>
             </div>
         </div>
     </footer>
 
-    <script src="{% static 'js/base.js'%}"></script>
+    {% block page_scripts %}
+    <script src="{% static 'js/base.js' %}"></script>
+{% endblock %}
 
-    {% block page_scripts %}{% endblock %}
+{% block extra_scripts %}
+    {# Este bloco ficará vazio no base, mas pode ser preenchido pelos templates filhos #}
+{% endblock %}
 </body>
 </html>

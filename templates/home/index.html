@@ -73,6 +73,37 @@
     <!-- Conteúdo principal -->
     <main role="main">
 
+        <section class="featured-publications" id="publicacoes-destaque">
+            <h2>Nossas Publicações Recentes</h2>
+            <div class="cards-container">
+                <a href="{% if latest_producao.link_producao %}{{ latest_producao.link_producao }}{% else %}#{% endif %}" target="_blank" aria-label="Abrir produção: {{ latest_producao.titulo }}" class="card-link">
+                    <article class="card">
+                        <h3>{{ latest_producao.titulo }}</h3>
+                        <p>
+                            <strong>Autores:</strong>
+                            {% for autor in latest_producao.autores.all %}
+                                {{ autor.nome }}{% if not forloop.last %}, {% endif %}
+                            {% empty %}
+                                Nenhum autor cadastrado.
+                            {% endfor %}
+                        </p>
+                        </article>
+                </a>
+                <a href="{% if latest_publicacao.arquivo_pdf %}{{ latest_publicacao.arquivo_pdf.url }}{% else %}#{% endif %}" target="_blank" aria-label="Abrir PDF: {{ latest_publicacao.titulo }}" class="card-link">
+                    <article class="card">
+                        <h3>{{ latest_publicacao.titulo }}</h3>
+                        <p>{{ latest_publicacao.descricao|default:"Sem resumo disponível." }}</p>
+                        </article>
+                </a>
+                <a href="{% url 'galeria:detalhe' latest_galeria.id %}" aria-label="Ver mais sobre {{ latest_galeria.title }}" class="card-link">
+                    <article class="card">
+                        <h3>{{ latest_galeria.title }}</h3>
+                        <p>{{ latest_galeria.description|default:"Sem descrição disponível." }}</p>
+                        </article>
+                </a>
+            </div>
+        </section>
+
         <section class="about-langue-section">
             <div class="about-langue-container animate-fade-in">
                 <h2 class="about-langue-title">Laboratório de Estudos da Linguagem, Literatura e História (LANGUE)</h2>
@@ -82,42 +113,59 @@
                     <p>O LANGUE conseguiu, de forma ininterrupta, aprovar projetos em editais de bolsa de iniciação científica (bolsas CNPq/UFRPE, CNPq-Af e FACEPE), além de outros editais de bolsa de pós-graduação (bolsas FACEPE) e de fomento à pesquisa (Chamada MCTIC/CNPQ Nº 28/2018 – UNIVERSAL). Destaca-se que as ações desenvolvidas pelo LANGUE produziram diversos artigos científicos, livros, capítulos de livros e organização de eventos nacionais e internacionais, proporcionando uma maior visibilidade do Laboratório e das pesquisas nele desenvolvidas no cenário acadêmico nacional.</p>
                 </div>
             </div>
-        </section>
-    </main>   
-        
-        <section class="featured-publications" id="publicacoes-destaque">
-            <h2>Featured Publications</h2>
-            <div class="cards-container">
-                <article class="card">
-                    <h3>Latest Research</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pulvinar, lectus eu commodo pulvinar, lectus eu commodo pulvinar, lectus eu commodo pulvinar.</p>
-                    <a href="#latest-research" aria-label="Ver mais sobre Latest Research">
-                        <img src="https://via.placeholder.com/30x30/721a1a/ffffff?text=🔍" alt="" width="30" height="30">
-                    </a>
-                </article>
-                
-                <article class="card">
-                    <h3>Featured Publications</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pulvinar, lectus eu commodo pulvinar, lectus eu commodo pulvinar, lectus eu commodo pulvinar.</p>
-                    <a href="#featured-publications" aria-label="Ver mais sobre Featured Publications">
-                        <img src="https://via.placeholder.com/30x30/721a1a/ffffff?text=📄" alt="" width="30" height="30">
-                    </a>
-                </article>
-                
-                <article class="card">
-                    <h3>Upcoming Events</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pulvinar, lectus eu commodo pulvinar, lectus eu commodo pulvinar, lectus eu commodo pulvinar.</p>
-                    <a href="#upcoming-events" aria-label="Ver mais sobre Upcoming Events">
-                        <img src="https://via.placeholder.com/30x30/721a1a/ffffff?text=📅" alt="" width="30" height="30">
-                    </a>
-                </article>
+            <div class="location-container">
+                <h2 class="location-title">Nossa Localização</h2>
+                <div class="location-content">
+                    <!-- Descrição da localização -->
+                    <div class="location-description">
+                        <div class="location-text">
+                            <p>O LANGUE - Laboratório de Estudos da Linguagem, Literatura e História está localizado na Universidade Federal Rural de Pernambuco, na rua Dom Manuel de Medeiros, s/n - Dois Irmãos, Recife - PE, 52171-900</p>
+                        </div>
+                        
+                        <!-- Informações de contato adicionais -->
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M21 10C21 17 12 23 12 23S3 17 3 10C3 5.02944 7.02944 1 12 1C16.9706 1 21 5.02944 21 10Z" stroke="#961120" stroke-width="2"/>
+                                    <circle cx="12" cy="10" r="3" stroke="#961120" stroke-width="2"/>
+                                </svg>
+                                <span>Rua Dom Manuel de Medeiros, s/n - Dois Irmãos</span>
+                            </div>
+                            <div class="contact-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 5C3 3.89543 3.89543 3 5 3H8.27924C8.70967 3 9.09181 3.27543 9.22792 3.68377L10.7257 8.17721C10.8831 8.64932 10.6694 9.16531 10.2243 9.38787L7.96701 10.5165C9.06925 12.9612 11.0388 14.9308 13.4835 16.033L14.6121 13.7757C14.8347 13.3306 15.3507 13.1169 15.8228 13.2743L20.3162 14.7721C20.7246 14.9082 21 15.2903 21 15.7208V19C21 20.1046 20.1046 21 19 21H18C9.71573 21 3 14.2843 3 6V5Z" stroke="#961120" stroke-width="2"/>
+                                </svg>
+                                <span>Recife - PE, 52171-900</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Mapa -->
+                    <div class="location-map">
+                        <div class="map-container">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3950.2089234567!2d-34.9527!3d-8.0131!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ab196f88c446e5%3A0x3c9ef52922447fd4!2sUniversidade%20Federal%20Rural%20de%20Pernambuco%20-%20UFRPE!5e0!3m2!1spt-BR!2sbr!4v1640995200000!5m2!1spt-BR!2sbr"
+                                width="100%" 
+                                height="400" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade"
+                                title="Localização do LANGUE - UFRPE">
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
+            
+    </main>   
+        
 
     <!-- Rodapé -->
     <footer role="contentinfo">
         <div class="footer-content">
-            <p>Copyright &copy; 2025 University. All rights reserved.</p>
+            <p>Copyright &copy; 2025 LANGUE UFRPE. Todos os direitos reservados.</p>
             <div class="social-media" role="list" aria-label="Redes sociais">
                 <a href="#facebook" aria-label="Facebook" role="listitem">
                     <img src="{% static 'images/icons/facebook.svg' %}" alt="Facebook" width="24" height="24" style="filter: brightness(0) invert(1);">
@@ -125,8 +173,8 @@
                 <a href="#instagram" aria-label="Instagram" role="listitem">
                     <img src="{% static 'images/icons/instagram.svg' %}" alt="Instagram" width="24" height="24" style="filter: brightness(0) invert(1);">
                 </a>
-                <a href="#linkedin" aria-label="LinkedIn" role="listitem">
-                    <img src="{% static 'images/icons/linkedin.svg' %}" alt="LinkedIn" width="24" height="24" style="filter: brightness(0) invert(1);">
+                <a href="http://127.0.0.1:8000/admin/" aria-label="Admin" role="listitem">
+                    <img src="{% static 'images/icons/admin.svg' %}" alt="LinkedIn" width="24" height="24" style="filter: brightness(0) invert(1);">
                 </a>
             </div>
         </div>

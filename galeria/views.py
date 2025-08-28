@@ -22,3 +22,9 @@ def album_detail_view(request, pk):
         'photos': photos
     }
     return render(request, 'galeria/album_detail.html', context)
+
+def detalhe_album(request, album_id):
+    album = get_object_or_404(Album, pk=album_id)
+    return render(request, (
+        'galeria/detalhe_album.html'
+    ), {'album': album})

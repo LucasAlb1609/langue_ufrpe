@@ -7,6 +7,7 @@ import os
 from io import BytesIO
 from django.core.files.base import ContentFile
 from django.conf import settings
+from django.urls import reverse
 
 
 def validate_pdf_file(file):
@@ -307,6 +308,9 @@ class PublicacaoPDF(models.Model):
             except FileNotFoundError:
                 return 0
         return 0
+    
+    def get_absolute_url(self):
+        return reverse('publicacoes:detalhes', args=[str(self.id)])
 
 
 class ConfiguracaoPaginaPublicacoes(models.Model):

@@ -26,10 +26,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
     # Página inicial
-    path('', TemplateView.as_view(template_name='home/index.html'), name='home'),
+    path('', views.home, name='home'),
 
     # Mecanismo de busca
-    path('busca/', include('search.urls')),
+    path('search/', include('search.urls')),
     
     # Linhas de pesquisa
     path('linhas-de-pesquisa/', include('linhas_pesquisa.urls')),
@@ -42,7 +42,8 @@ urlpatterns = [
 
     # Galeria de Imagens
     path('galeria/', include('galeria.urls', namespace='galeria')),
-    
+
+       
     # API endpoints (se necessário)
     path('api/', include('rest_framework.urls')),
 ]

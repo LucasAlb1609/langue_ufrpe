@@ -351,6 +351,11 @@ def estatisticas_ajax_view(request):
     
     return JsonResponse({'error': 'Requisição inválida'}, status=400)
 
+def producao_detail(request, producao_id):
+    producao = get_object_or_404(ProducaoBibliografica, pk=producao_id)
+    return render(request, (
+        'producoes_bibliograficas/producao_detail.html'
+    ), {'producao': producao})
 
 # Views para API (se necessário)
 from rest_framework import viewsets, permissions
