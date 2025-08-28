@@ -27,12 +27,6 @@ body {
     padding: 0 20px;
 }
 
-/* Header - Removido pois não é usado no HTML atual */
-header {
-    background-color: #721a1a; /* Vermelho principal */
-    color: #ffffff;
-    padding: 10px 0;
-}
 
 nav {
     display: flex;

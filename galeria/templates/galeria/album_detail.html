@@ -4,7 +4,9 @@
 {% block title %}{{ album.title }} - {{ block.super }}{% endblock %}
 
 {% block page_styles %}
+    {{ block.super }}
     <link rel="stylesheet" href="{% static 'styles/modular/galeria.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
 {% endblock %}
 
 {% block content %}
@@ -29,8 +31,9 @@
         {% endfor %}
     </section>
 </div>
+{% endblock %}
 
-<!-- Lightbox2 JS e CSS para visualização de imagem -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox-plus-jquery.min.js"></script>
+{% block page_scripts %}
+    {{ block.super }} {# Garante que o base.js seja carregado #}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox-plus-jquery.min.js"></script>
 {% endblock %}

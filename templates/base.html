@@ -71,8 +71,12 @@
         </div>
     </footer>
 
-    <script src="{% static 'js/base.js'%}"></script>
+    {% block page_scripts %}
+    <script src="{% static 'js/base.js' %}"></script>
+{% endblock %}
 
-    {% block page_scripts %}{% endblock %}
+{% block extra_scripts %}
+    {# Este bloco ficará vazio no base, mas pode ser preenchido pelos templates filhos #}
+{% endblock %}
 </body>
 </html>

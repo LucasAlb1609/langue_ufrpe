@@ -4,6 +4,7 @@
 {% block title %}Galeria de Fotos - {{ block.super }}{% endblock %}
 
 {% block page_styles %}
+    {{ block.super }}
     <link rel="stylesheet" href="{% static 'styles/modular/galeria.css' %}">
 {% endblock %}
 
@@ -35,4 +36,9 @@
         {% endfor %}
     </section>
 </div>
+{% endblock %}
+
+{% block page_scripts %}
+    {{ block.super }} {# ESSA LINHA É A CORREÇÃO PRINCIPAL #}
+    {# Se houver algum script específico para a lista de álbuns no futuro, ele viria aqui. #}
 {% endblock %}
