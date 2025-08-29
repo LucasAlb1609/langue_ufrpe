@@ -1,6 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Detalhes do Álbum - LANGUE{% endblock %}
+
+{% block content %}
 <h1>Detalhes do Álbum</h1>
 <p>Título: {{ album.titulo }}</p>
 <p>Descrição: {{ album.descricao }}</p>
 {% if album.imagem %}
     <img src="{{ album.imagem.url }}" alt="{{ album.titulo }}">
 {% endif %}
+{% endblock %}

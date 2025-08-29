@@ -229,3 +229,111 @@ a.album-card-link {
     transform: translateY(0);
   }
 }
+
+/* 🍔 CORREÇÃO ESPECÍFICA PARA MENU HAMBÚRGUER NA GALERIA */
+/* Garantir que o menu hambúrguer seja visível em dispositivos móveis */
+@media (max-width: 768px) {
+    /* Forçar visibilidade do menu de navegação */
+    .main-nav {
+        display: flex !important;
+        justify-content: flex-end !important;
+        padding: 0 15px !important;
+        min-height: 50px !important;
+        position: relative !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        align-items: center !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    /* Forçar visibilidade do botão hambúrguer */
+    .nav-toggle {
+        display: block !important;
+        background: none !important;
+        border: none !important;
+        cursor: pointer !important;
+        padding: 10px !important;
+        width: 44px !important;
+        height: 44px !important;
+        position: relative !important;
+        z-index: 1001 !important;
+        outline: none !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    /* Ícone do hambúrguer */
+    .nav-toggle::before {
+        content: '☰' !important;
+        color: #333 !important;
+        font-size: 1.8em !important;
+        transition: transform 0.2s ease-in-out !important;
+        display: block !important;
+        text-align: center !important;
+        line-height: 1 !important;
+    }
+
+    /* Ícone de fechar quando ativo */
+    .nav-toggle.active::before {
+        content: '✕' !important;
+        transform: rotate(90deg) !important;
+        color: #961120 !important;
+    }
+
+    /* Lista do menu dropdown */
+    .main-nav-list {
+        display: block !important;
+        width: 100% !important;
+        max-height: 0 !important;
+        overflow: hidden !important;
+        transition: max-height 0.35s ease-in-out, padding 0.35s ease-in-out !important;
+        position: absolute !important;
+        top: 100% !important;
+        left: 0 !important;
+        background: #fff7f5 !important;
+        border-top: 1px solid #eee !important;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08) !important;
+        z-index: 1000 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        list-style: none !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Estado ativo do menu */
+    .main-nav-list.active {
+        max-height: 500px !important;
+        padding: 10px 0 !important;
+        border-bottom: 1px solid #eee !important;
+    }
+
+    /* Links do menu */
+    .main-nav-list li {
+        text-align: center !important;
+        border-bottom: 1px solid #f0f0f0 !important;
+    }
+
+    .main-nav-list li:last-child {
+        border-bottom: none !important;
+    }
+
+    .main-nav-list a {
+        padding: 15px 20px !important;
+        font-size: 1.1em !important;
+        display: block !important;
+        width: 100% !important;
+        color: #333 !important;
+        text-decoration: none !important;
+        transition: background-color 0.2s, color 0.2s !important;
+    }
+
+    .main-nav-list a:hover {
+        background-color: rgba(150, 17, 32, 0.1) !important;
+        color: #961120 !important;
+    }
+
+    .main-nav-list a::after {
+        display: none !important;
+    }
+}

@@ -17,6 +17,15 @@
 {% endblock %}
 
 {% block content %}
+    <div class="menu">
+        <button class="menu-toggle" aria-expanded="false">☰</button>
+        <nav class="menu-items">
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/contact">Contact</a>
+        </nav>
+    </div>
+
     <div class="search-results-container">
         <div class="search-header">
             <h1 class="search-title">
@@ -226,6 +235,27 @@
                 </div>
             </section>
         {% endif %}
+    </div>
+
+    <!-- Botão de busca e modal -->
+    <div class="search">
+        <button class="search-button">🔍</button>
+        <div class="search-modal">
+            <button class="close-button">✖</button>
+            <form action="/search" method="get">
+                <input type="text" name="q" placeholder="Search...">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Botão de compartilhamento e modal -->
+    <div class="share">
+        <button class="share-button">Share</button>
+        <div class="share-modal">
+            <button class="close-button">✖</button>
+            <p>Share this page!</p>
+        </div>
     </div>
 {% endblock %}
 

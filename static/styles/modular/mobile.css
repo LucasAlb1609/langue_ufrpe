@@ -84,16 +84,17 @@
         position: relative;
         width: 100%;
         box-sizing: border-box;
+        display: flex !important; /* Força a exibição */
+        align-items: center;
     }
 
     /* Lista do menu (o dropdown) */
     .main-nav-list {
-        /* MUDANÇA: Usar display: block simplifica o layout e corrige a largura. */
         display: block; 
         width: 100%;
         max-height: 0;
         overflow: hidden;
-        transition: max-height 0.35s ease-in-out;
+        transition: max-height 0.35s ease-in-out, padding 0.35s ease-in-out;
         position: absolute;
         top: 100%; 
         left: 0;
@@ -127,7 +128,15 @@
         padding: 15px 20px;
         font-size: 1.1em;
         display: block;
-        width: 100%; /* Garante que o link ocupe todo o espaço do <li> */
+        width: 100%;
+        color: #333;
+        text-decoration: none;
+        transition: background-color 0.2s, color 0.2s;
+    }
+
+    .main-nav-list a:hover {
+        background-color: rgba(150, 17, 32, 0.1);
+        color: #961120;
     }
 
     .main-nav-list a::after {
@@ -136,17 +145,16 @@
 
     /* Botão hambúrguer */
     .nav-toggle {
-        display: block;
+        display: block !important; /* Força a exibição */
         background: none;
         border: none;
         cursor: pointer;
         padding: 10px;
         width: 44px;
         height: 44px;
-        right: 15px;
-        top: 50%;
-        transform: translateY(-50%);
+        position: relative;
         z-index: 1001;
+        outline: none;
     }
 
     /* Ícone do hambúrguer (☰) */
@@ -155,12 +163,23 @@
         color: #333;
         font-size: 1.8em;
         transition: transform 0.2s ease-in-out;
+        display: block;
+        text-align: center;
+        line-height: 1;
     }
 
     /* Ícone de fechar (✕) quando o menu está ativo */
     .nav-toggle.active::before {
         content: '✕';
         transform: rotate(90deg);
+        color: #961120;
+    }
+    
+    /* Garantir que o menu seja visível em todas as páginas */
+    .main-nav,
+    .nav-toggle {
+        visibility: visible !important;
+        opacity: 1 !important;
     }
     
     /* --- FIM DA CORREÇÃO --- */
@@ -287,4 +306,67 @@
     html {
         scroll-behavior: smooth;
     }
+
+    .menu {
+        display: block;
+    }
+
+    .menu-items {
+        display: none;
+    }
+
+    .menu-items.expanded {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .search-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: none;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .search-modal.visible {
+        display: flex;
+    }
+}
+
+.share-modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: none; /* escondido por padrão */
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+.share-modal.visible {
+    display: flex;
+}
+.share-modal .modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+}
+.share-modal .close-button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+}
+.share-modal h2 {
+    margin-bottom: 15px;
 }

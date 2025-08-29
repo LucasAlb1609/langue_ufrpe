@@ -165,3 +165,25 @@ footer {
     .nav-toggle.active::before { content: '✕'; }
     .footer-content { flex-direction: column; gap: 15px; }
 }
+
+/* --- Menu and Search Modal Styles --- */
+.menu {
+    display: block;
+}
+
+.menu-items {
+    display: none;
+}
+
+.menu-items.expanded {
+    display: flex;
+    flex-direction: column;
+}
+
+.search-modal {
+    display: none;
+}
+
+.search-modal.visible {
+    display: flex;
+}

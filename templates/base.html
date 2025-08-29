@@ -73,6 +73,55 @@
 
     {% block page_scripts %}
     <script src="{% static 'js/base.js' %}"></script>
+    
+    <!-- Script adicional para garantir inicialização do menu -->
+    <script>
+        // Fallback melhorado para garantir que o menu funcione mesmo se houver problemas de carregamento
+        document.addEventListener('DOMContentLoaded', function() {
+            // Aguarda um pouco mais para garantir que todos os scripts foram carregados
+            setTimeout(function() {
+                const navToggle = document.getElementById('navToggle');
+                const navList = document.getElementById('mainNavList');
+                
+                // Verifica se os elementos existem e se o menu ainda não foi inicializado
+                if (navToggle && navList && !navToggle.hasAttribute('data-initialized')) {
+                    console.log('Inicializando menu hambúrguer como fallback');
+                    navToggle.setAttribute('data-initialized', 'true');
+                    
+                    function toggleMenu(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        const isActive = navList.classList.toggle('active');
+                        navToggle.classList.toggle('active');
+                        navToggle.setAttribute('aria-expanded', isActive);
+                        
+                        console.log('Menu toggled (fallback):', isActive ? 'opened' : 'closed');
+                    }
+                    
+                    // Remove listeners anteriores se existirem
+                    navToggle.removeEventListener('click', toggleMenu);
+                    navToggle.addEventListener('click', toggleMenu);
+                    
+                    // Adiciona listener para fechar menu ao clicar fora
+                    document.addEventListener('click', function(e) {
+                        if (navList.classList.contains('active') && 
+                            !navToggle.contains(e.target) && 
+                            !navList.contains(e.target)) {
+                            
+                            navList.classList.remove('active');
+                            navToggle.classList.remove('active');
+                            navToggle.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                } else if (navToggle && navToggle.hasAttribute('data-initialized')) {
+                    console.log('Menu hambúrguer já foi inicializado pelo script principal');
+                } else if (!navToggle || !navList) {
+                    console.log('Elementos do menu não encontrados na página atual');
+                }
+            }, 300);
+        });
+    </script>
 {% endblock %}
 
 {% block extra_scripts %}

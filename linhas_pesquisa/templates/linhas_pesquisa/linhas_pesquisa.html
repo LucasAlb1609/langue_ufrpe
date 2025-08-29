@@ -133,7 +133,9 @@
 {% endblock %}
 
 {% block page_scripts %}
+    {{ block.super }}
     <script src="{% static 'js/linhas_pesquisa.js' %}"></script>
+    <script src="{% static 'js/search.js' %}"></script>
     
     <script>
         // Funções inline mantidas pois são independentes do problema principal
